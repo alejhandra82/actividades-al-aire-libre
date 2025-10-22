@@ -1,0 +1,60 @@
+<div *ngIf="estilo === 'catalogo'" class="row">
+  <div *ngFor="let evento of eventos" class="col-md-6 col-lg-4 mb-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title text-uppercase text-center">{{ evento.nombreEvento }}</h5>
+        <p class="card-text">{{ evento.descripcionEvento }}</p>
+        <p class="card-text"><strong>Fecha:</strong> {{ evento.fechaEvento | date:'short' }}</p>
+        <div class="mt-auto">
+          <app-participacion [eventoId]="evento.idEvento"></app-participacion>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="estilo === 'lista'" class="d-flex flex-column gap-3">
+  <div *ngFor="let evento of eventos">
+    <div class="card shadow-sm h-100">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title">{{ evento.nombreEvento }}</h5>
+        <p class="card-text">{{ evento.descripcionEvento }}</p>
+        <p class="card-text"><strong>Fecha:</strong> {{ evento.fechaEvento | date:'short' }}</p>
+        <div class="mt-auto">
+          <app-participacion [eventoId]="evento.idEvento"></app-participacion>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--<div class="container mt-4">
+  <h2 class="mb-4" *ngIf="actividadId">Eventos de la Actividad</h2>
+  <h2 class="mb-4" *ngIf="!actividadId">Todos los Eventos</h2>
+
+  <div class="row">
+    <div *ngFor="let evento of eventos" class="col-md-6 col-lg-4 mb-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title text-uppercase text-center">
+            {{ evento.nombreEvento }}
+          </h5>
+
+          <p class="card-text">
+            <strong>Descripción:</strong> {{ evento.descripcionEvento }}
+          </p>
+          <p class="card-text">
+            <strong>Fecha:</strong> {{ evento.fechaEvento | date:'short' }}
+          </p>
+
+          <!-- Aquí integramos el componente de participación -->
+         <!-- <div class="mt-auto">
+            <app-participacion [eventoId]="evento.idEvento"></app-participacion>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>-->

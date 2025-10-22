@@ -1,0 +1,208 @@
+<div class="container">
+
+  <!-- HEADER FIJO -->
+  <div class="header-fijo">
+    <h4 class="titulo-admin">
+      <i class="bi bi-journal-text"></i> Gestión de Actividades
+    </h4>
+
+    <!-- Botones de modo -->
+    <div class="modo-container">
+      <button class="modo-btn" [class.activo]="modoVista === 'todas'" (click)="cambiarModo('todas')">
+        Todas
+      </button>
+      <button class="modo-btn" [class.activo]="modoVista === 'tipo'" (click)="cambiarModo('tipo')">
+        Por tipo
+      </button>
+      <button class="modo-btn" [class.activo]="modoVista === 'nombre'" (click)="cambiarModo('nombre')">
+        Por nombre
+      </button>
+    </div>
+
+    <!-- Filtros -->
+    <div class="filtro-fijo">
+      <!-- Filtro por tipo de actividad -->
+      <select *ngIf="modoVista === 'tipo'" class="dropdown" (change)="onTipoSeleccionado($any($event.target).value)">
+        <option value="">Seleccione un tipo de actividad</option>
+        <option *ngFor="let t of tiposActividad" [value]="t.idTipoActividad">
+          {{ t.nombreTipoActividad }}
+        </option>
+      </select>
+
+      <!-- Filtro por nombre (texto libre) -->
+      <input *ngIf="modoVista === 'nombre'"
+             type="text"
+             class="input-filtro"
+             placeholder="🔍 Buscar por nombre..."
+             (input)="onNombreIngresado($any($event.target).value)">
+    </div>
+    <!-- BOTÓN CREAR -->
+  <div class="text-end mb-3">
+    <button class="btn btn-success btn-sm" (click)="abrirModalCrear()">
+      <i class="bi bi-plus-circle"></i> Nueva Actividad
+    </button>
+  </div>
+  </div>
+
+  
+
+  <!-- SPINNER -->
+  <div *ngIf="cargando" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p class="mt-3">Cargando actividades...</p>
+  </div>
+
+  <!-- LISTA DE ACTIVIDADES -->
+  <div *ngIf="!cargando && actividadesFiltradas.length > 0" class="row g-3">
+    <div *ngFor="let act of actividadesFiltradas" class="col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title text-primary text-center">{{ act.nombreActividad }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted text-center">
+  <i [ngClass]="{
+    'bi bi-tree': act.tipoActividadDTO.nombreTipoActividad === 'Senderismo',
+    'bi bi-bicycle': act.tipoActividadDTO.nombreTipoActividad === 'Ciclismo',
+    'bi bi-basket': act.tipoActividadDTO.nombreTipoActividad === 'Picnic',
+    'bi bi-water': act.tipoActividadDTO.nombreTipoActividad === 'Kayak',
+    'bi bi-fire': act.tipoActividadDTO.nombreTipoActividad === 'Camping',
+    'bi bi-sun': act.tipoActividadDTO.nombreTipoActividad === 'Escalada',
+    'bi bi-star': !['Senderismo','Ciclismo','Picnic','Kayak','Camping','Escalada'].includes(act.tipoActividadDTO.nombreTipoActividad)
+  }" class="me-2 icono-tipo"></i>
+  {{ act.tipoActividadDTO.nombreTipoActividad }}
+</h6>
+
+          <p class="card-text flex-grow-1">
+            <strong>Ubicación:</strong> {{ act.ubicacion }}<br>
+            <strong>Duración:</strong> {{ act.duracion }} min<br>
+            <strong>Dificultad:</strong> {{ act.dificultad }}<br>
+            <strong>Precio:</strong>{{ esNumero(act.precio) ? (act.precio | currency:'EUR':'symbol':'1.2-2') : act.precio }}<br>
+            <strong>Material Recomendado:</strong> {{ act.materialRecomendado }}<br>
+
+          </p>
+          <div class="mt-3 d-flex justify-content-around">
+            <button class="btn btn-outline-primary btn-sm" (click)="abrirModalEditar(act)">
+              <i class="bi bi-pencil"></i> Editar
+            </button>
+            <button class="btn btn-outline-danger btn-sm" (click)="eliminarActividad(act.idActividad)">
+              <i class="bi bi-trash"></i> Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIN RESULTADOS -->
+  <div *ngIf="!cargando && actividadesFiltradas.length === 0" class="text-center text-muted mt-5">
+    No hay actividades que coincidan con los filtros seleccionados.
+  </div>
+
+  <!-- MODAL -->
+<div class="modal fade" id="actividadModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <form [formGroup]="actividadForm" (ngSubmit)="guardarActividad()">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title">{{ editando ? 'Editar Actividad' : 'Nueva Actividad' }}</h5>
+          <button type="button" class="btn-close btn-close-white" (click)="cerrarModal()"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row g-3">
+            <!-- Nombre -->
+            <div class="col-md-6">
+              <label class="form-label">Nombre *</label>
+              <input type="text" formControlName="nombreActividad" class="form-control"
+                     [ngClass]="{'is-invalid': actividadForm.get('nombreActividad')?.touched && actividadForm.get('nombreActividad')?.invalid}">
+              <div class="invalid-feedback" *ngIf="actividadForm.get('nombreActividad')?.errors?.['required']">
+                El nombre es obligatorio.
+              </div>
+              <div class="invalid-feedback" *ngIf="actividadForm.get('nombreActividad')?.errors?.['pattern']">
+                Solo se permiten letras y espacios.
+              </div>
+            </div>
+
+            <!-- Ubicación -->
+            <div class="col-md-6">
+              <label class="form-label">Ubicación *</label>
+              <input type="text" formControlName="ubicacion" class="form-control"
+                     [ngClass]="{'is-invalid': actividadForm.get('ubicacion')?.touched && actividadForm.get('ubicacion')?.invalid}">
+              <div class="invalid-feedback">La ubicación es obligatoria.</div>
+            </div>
+
+            <!-- Descripción -->
+            <div class="col-12">
+              <label class="form-label">Descripción *</label>
+              <textarea formControlName="descripcion" class="form-control" rows="3"
+                        [ngClass]="{'is-invalid': actividadForm.get('descripcion')?.touched && actividadForm.get('descripcion')?.invalid}"></textarea>
+              <div class="invalid-feedback" *ngIf="actividadForm.get('descripcion')?.errors?.['required']">
+                La descripción es obligatoria.
+              </div>
+              <div class="invalid-feedback" *ngIf="actividadForm.get('descripcion')?.errors?.['minlength']">
+                La descripción debe tener al menos 10 caracteres.
+              </div>
+            </div>
+
+            <!-- Duración -->
+            <div class="col-md-4">
+              <label class="form-label">Duración (min) *</label>
+              <input type="number" formControlName="duracion" class="form-control"
+                     [ngClass]="{'is-invalid': actividadForm.get('duracion')?.touched && actividadForm.get('duracion')?.invalid}">
+              <div class="invalid-feedback">Debe ingresar una duración válida (mínimo 1).</div>
+            </div>
+
+            <!-- Dificultad -->
+            <div class="col-md-4">
+              <label class="form-label">Dificultad *</label>
+              <select formControlName="dificultad" class="form-select"
+                      [ngClass]="{'is-invalid': actividadForm.get('dificultad')?.touched && actividadForm.get('dificultad')?.invalid}">
+                <option value="">Seleccione</option>
+                <option value="Fácil">Fácil</option>
+                <option value="Medio">Medio</option>
+                <option value="Difícil">Difícil</option>
+              </select>
+              <div class="invalid-feedback">Seleccione una dificultad.</div>
+            </div>
+
+            <!-- Precio -->
+            <div class="col-md-4">
+            <label class="form-label">Precio *</label>
+            <input type="text" formControlName="precio" class="form-control"
+             [ngClass]="{'is-invalid': actividadForm.get('precio')?.touched && actividadForm.get('precio')?.invalid}">
+            <div class="invalid-feedback">El precio es obligatorio.</div>
+            </div>
+
+
+            <!-- Material Recomendado -->
+            <div class="col-md-6">
+              <label class="form-label">Material Recomendado</label>
+              <input type="text" formControlName="materialRecomendado" class="form-control">
+            </div>
+
+            <!-- Tipo Actividad -->
+<div class="col-md-6" formGroupName="tipoActividadDTO">
+  <label class="form-label">Tipo de Actividad *</label>
+  <select formControlName="idTipoActividad" class="form-select"
+          [ngClass]="{'is-invalid': actividadForm.get('tipoActividadDTO')?.get('idTipoActividad')?.touched &&
+                                 actividadForm.get('tipoActividadDTO')?.get('idTipoActividad')?.invalid}">
+    <option value="">Seleccione un tipo</option>
+    <option *ngFor="let tipo of tiposActividad" [value]="tipo.idTipoActividad">
+      {{ tipo.nombreTipoActividad }}
+    </option>
+  </select>
+  <div class="invalid-feedback">
+    Seleccione un tipo de actividad.
+  </div>
+</div>
+
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">{{ editando ? 'Guardar cambios' : 'Crear actividad' }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<div class="container">
+  
+  <!-- HEADER FIJO -->
+  <div class="header-fijo">
+    <h4 class="titulo-admin"><i class="bi bi-people-fill"></i>Gestión de Participaciones</h4>
+
+    <!-- Botones de modo -->
+    <div class="modo-container">
+      <button class="modo-btn"
+              [class.activo]="modoVista === 'todas'"
+              (click)="cambiarModo('todas')">Todas</button>
+      <button class="modo-btn"
+              [class.activo]="modoVista === 'evento'"
+              (click)="cambiarModo('evento')">Por Evento</button>
+      <button class="modo-btn"
+              [class.activo]="modoVista === 'familia'"
+              (click)="cambiarModo('familia')">Por Familia</button>
+    </div>
+
+    <!-- Dropdown (filtro) -->
+    <div class="filtro-fijo">
+      <select *ngIf="modoVista === 'evento'" 
+              class="dropdown"
+              (change)="onEventoSeleccionado($any($event.target).value)">
+        <option value="">Seleccione un evento</option>
+        <option *ngFor="let e of eventos" [value]="e.idEvento">
+          {{ e.nombreEvento }}
+        </option>
+      </select>
+
+      <select *ngIf="modoVista === 'familia'" 
+              class="dropdown"
+              (change)="onFamiliaSeleccionada($any($event.target).value)">
+        <option value="">Seleccione una familia</option>
+        <option *ngFor="let f of familias" [value]="f.idFamilia">
+          {{ f.nombreFamilia }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- CONTENIDO DE PARTICIPACIONES -->
+  <div *ngIf="cargando" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
+
+  <div *ngIf="!cargando && participaciones.length > 0"
+       class="row justify-content-center">
+    <div *ngFor="let p of participaciones" class="col">
+      <div class="card--participacion">
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ p.familiaDTO.nombreFamilia }}</h5>
+          <p class="card-text">
+            <i class="bi bi-calendar-event"></i> {{ p.eventoDTO.nombreEvento }}
+          </p>
+          <p><strong>Fecha:</strong> {{ p.fechaParticipacion | date:'short' }}</p>
+          <span class="estado-badge" [ngClass]="{
+            'estado-confirmada': p.estado === 'Confirmada',
+            'estado-cancelada': p.estado === 'Cancelada',
+            'estado-pendiente': p.estado === 'Pendiente'
+          }">
+            Estado: {{ p.estado }}
+          </span>
+          <button class="btn-outline-danger"
+                  [disabled]="p.estado === 'Cancelada'"
+                  (click)="cancelarParticipacion(p)">
+            <i class="bi bi-x-circle"></i> Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!cargando && participaciones.length === 0"
+       class="text-muted">
+    <i class="bi bi-info-circle"></i> No hay participaciones disponibles.
+  </div>
+
+</div>

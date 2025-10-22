@@ -1,0 +1,106 @@
+<!-- Hero Section -->
+<section class="hero text-center py-5">
+  <!-- <div
+    style="background-color: rgba(144, 227, 177, 0.6); position: absolute; top:0; right:0; bottom:0; left:0;"
+  ></div> -->
+
+  <div class="container position-relative" style="z-index: 1;">
+    <h1 class="display-4 fw-bold">EXPLORA LA NATURALEZA EN FAMILIA</h1>
+    <p class="lead mb-4">Descubre actividades para todos</p>
+    <button class="btn btn-warning btn-lg rounded-pill">Explora Actividades</button>
+
+  </div>
+</section>
+
+
+<!-- Catálogo de Actividades -->
+<section class="actividades-home py-5 bg-light">
+  <div class="container">
+    <h2 class="mb-4 text-center">Actividades Destacadas</h2>
+    <app-actividades [limit]="3"></app-actividades>
+  </div>
+</section>
+
+  
+
+<section id="explorar-por-actividad" class="py-5 text-center">
+  <h2 class="mb-4">Explora por actividad</h2>
+  <div class="d-flex flex-wrap justify-content-center gap-4">
+    <div class="actividad-circle">
+      <img src="assets/senderismo.png" alt="Senderismo" />
+      <p class="mt-2">Senderismo</p>
+    </div>
+    <div class="actividad-circle">
+      <img src="assets/camping.png" alt="Camping" />
+      <p class="mt-2">Camping</p>
+    </div>
+    <div class="actividad-circle">
+      <img src="assets/bicicleta.png" alt="Bicicleta" />
+      <p class="mt-2">Bicicleta</p>
+    </div>
+    <!-- Más actividades -->
+  </div>
+</section>
+
+
+<!-- Seccion Eventos -->
+
+<section class="eventos-home py-5 bg-light">
+  <div class="container">
+   <h2 class="mb-4 text-center">Eventos</h2>
+   <app-eventos></app-eventos>
+   </div>
+</section>
+
+
+<!-- Usamos el selector correcto -->
+
+
+<!-- Sección Carrusel de Opiniones en Home -->
+<section class="mt-5">
+  <div class="container">
+    <app-opiniones [idActividad]="undefined"></app-opiniones>
+  </div>
+</section>
+
+
+
+
+
+
+
+<!-- Formulario de Contacto -->
+<section class="contacto py-5">
+  <div class="container">
+    <h2 class="mb-4 text-center">Contacto</h2>
+    <form>
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="nombre" placeholder="Tu nombre">
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo electrónico</label>
+        <input type="email" class="form-control" id="email" placeholder="nombre@ejemplo.com">
+      </div>
+      <div class="mb-3">
+        <label for="mensaje" class="form-label">Mensaje</label>
+        <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu mensaje"></textarea>
+      </div>
+      <button type="submit" class="btn btn-success">Enviar</button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3">
+  <div class="container">
+    <small>© 2025 Plataforma Familiar. Alejandra Loaiza. Todos los derechos reservados. </small><br>
+    <small>
+      Contacto: info&#64;plataformafamiliar.com |
+|  
+      <a href="#" class="text-white me-2">Facebook</a> 
+      <a href="#" class="text-white me-2">Twitter</a> 
+      <a href="#" class="text-white">Instagram</a>
+    </small>
+  </div>
+</footer>

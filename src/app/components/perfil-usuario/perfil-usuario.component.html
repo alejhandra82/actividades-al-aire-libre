@@ -1,0 +1,62 @@
+<div class="container mt-5">
+  <h2 class="mb-4">Mi Perfil</h2>
+
+  <form [formGroup]="perfilForm" (ngSubmit)="guardarCambios()" class="row g-3">
+
+    <!-- Foto de perfil -->
+    <div class="col-md-4 text-center">
+      <div class="mb-3">
+        <img [src]="imagenPreview" alt="Foto de perfil"
+             class="img-thumbnail rounded-circle"
+             style="width: 200px; height: 200px; object-fit: contain;">
+      </div>
+      <div class="mb-3">
+        <input type="file" class="form-control" (change)="previsualizarImagen($event)">
+      </div>
+    </div>
+
+    <!-- Datos del usuario -->
+    <div class="col-md-8">
+      <div class="mb-3">
+        <label for="nombreUsuario" class="form-label">Nombre</label>
+        <input type="text" id="nombreUsuario" class="form-control" formControlName="nombreUsuario">
+        <div class="text-danger" *ngIf="mostrarError('nombreUsuario','required')">
+          El nombre es obligatorio.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="apellidoUsuario" class="form-label">Apellidos</label>
+        <input type="text" id="apellidoUsuario" class="form-control" formControlName="apellidoUsuario">
+        <div class="text-danger" *ngIf="mostrarError('apellidoUsuario','required')">
+          Los apellidos son obligatorios.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="correo" class="form-label">Correo</label>
+        <input type="email" id="correo" class="form-control" formControlName="correo">
+        <div class="text-danger" *ngIf="mostrarError('correo','required')">
+          El correo es obligatorio.
+        </div>
+        <div class="text-danger" *ngIf="mostrarError('correo','email')">
+          Introduce un correo válido.
+        </div>
+      </div>
+
+      <!-- Familia (solo lectura por ahora) -->
+      <div class="mb-3">
+        <label for="idFamilia" class="form-label">Familia</label>
+          <input type="text" class="form-control" [value]="nombreFamilia" disabled />
+      </div>
+
+      <!-- Botón guardar -->
+      <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary" [disabled]="perfilForm.invalid">
+          Guardar cambios
+        </button>
+      </div>
+      </div>  
+  </form>
+</div>
+

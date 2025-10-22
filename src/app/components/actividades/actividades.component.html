@@ -1,0 +1,40 @@
+<div class="container py-5">
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="col" *ngFor="let actividad of actividades">
+    <div class="card h-100 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title text-uppercase text-center">{{ actividad.nombreActividad }}</h5>
+        <p class="card-text">{{ actividad.descripcion }}</p>
+        <p class="card-text"><small class="text-muted">{{ actividad.ubicacion }}</small></p>
+      </div>
+      <div class="card-footer text-end">
+  <button class="btn btn-primary btn-sm" [routerLink]="['/actividad', actividad.idActividad]">
+    Ver más
+  </button>
+</div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+<!-- Si hay actividades, mostramos la lista -->
+<!--<div *ngIf="actividades.length > 0; else noActividades">
+  <ul>
+    <li *ngFor="let actividad of actividades">
+      {{ actividad.nombreActividad }} 
+      - {{ actividad.tipoActividadDTO.nombreTipoActividad }}
+    </li>
+  </ul>
+</div>
+
+<!-- Si no hay actividades, mostramos este bloque -->
+<!-- <ng-template #noActividades>
+  <p>No hay actividades registradas.</p>
+</ng-template>
+
+<!-- Contador de actividades -->
+<!--<p>Total de actividades: {{ actividades.length }}</p> -->

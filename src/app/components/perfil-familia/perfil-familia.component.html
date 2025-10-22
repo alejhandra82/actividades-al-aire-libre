@@ -1,0 +1,95 @@
+<div class="container mt-4">
+
+  <!-- Vista de creación -->
+  <div *ngIf="mostrarCrearFamilia">
+    <h3 class="mb-4">Crear nueva familia</h3>
+    <form [formGroup]="crearForm" (ngSubmit)="crearFamilia()">
+      <div class="row">
+        <!-- Imagen -->
+        <div class="col-md-4 text-center">
+          <img [src]="imagenPreview" alt="Foto familia" class="img-fluid rounded shadow mb-3" style="max-height: 220px;">
+          <div class="mb-3">
+            <label class="form-label">Foto de la familia</label>
+            <input type="file" class="form-control" (change)="previsualizarImagen($event, crearForm)">
+          </div>
+        </div>
+
+        <!-- Datos -->
+        <div class="col-md-8">
+          <div class="mb-3">
+            <label class="form-label">Nombre de la familia</label>
+            <input type="text" class="form-control" formControlName="nombreFamilia">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Correo</label>
+            <input type="email" class="form-control" formControlName="correo">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" formControlName="descripcion" rows="3"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-success w-100">Crear familia</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Vista de perfil -->
+  <div *ngIf="!mostrarCrearFamilia && familia">
+    <h3 class="mb-4">Perfil de la familia</h3>
+    <form [formGroup]="editarForm" (ngSubmit)="guardarCambios()">
+      <div class="row">
+        <!-- Imagen -->
+        <div class="col-md-4 text-center">
+          <img [src]="imagenPreview" alt="Foto familia" class="img-thumbnail rounded-circle" style="width: 200px; height: 200px; object-fit: contain;">
+          <div class="mb-3">
+
+           
+            <!--<label class="form-label">Actualizar foto</label> -->
+            <input type="file" class="form-control" (change)="previsualizarImagen($event, editarForm)">
+          </div>
+        </div>
+
+        <!-- Datos -->
+        <div class="col-md-8">
+          <div class="mb-3">
+            <label class="form-label">Nombre de la familia</label>
+            <input type="text" class="form-control" formControlName="nombreFamilia">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Correo</label>
+            <input type="email" class="form-control" formControlName="correo">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" formControlName="descripcion" rows="3"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary lh-base">Guardar cambios</button>
+        </div>
+      </div>
+    </form>
+
+    <hr class="my-4">
+
+    <!-- Miembros -->
+<h4 class="mb-3">Miembros de la familia</h4>
+<div class="row">
+  <div *ngFor="let miembro of miembros" class="col-md-4 col-sm-6 mb-3">
+    <div class="card shadow-sm h-100 text-center">
+      <div class="card-body">
+        <!-- Avatar con iniciales -->
+        <div class="avatar mb-3" [ngStyle]="{ 'background-color': getAvatarColor(miembro) }">
+  {{ miembro.nombreUsuario.charAt(0) }}{{ miembro.apellidoUsuario.charAt(0) }}
+</div>
+        <h5 class="card-title">{{ miembro.nombreUsuario }}</h5>
+        <p class="card-text text-muted">{{ miembro.correo }}</p>
+      </div>
+    </div>
+  </div>
+</div>

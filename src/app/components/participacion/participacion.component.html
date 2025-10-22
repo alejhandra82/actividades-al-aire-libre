@@ -1,0 +1,48 @@
+<div class="card shadow-sm mt-3">
+  <div class="card-body text-center">
+    
+    <!-- Si la familia NO tiene participación -->
+    <div *ngIf="!participacion">
+      <button class="btn btn-primary btn-sm" (click)="participar()">
+        Participar
+      </button>
+    </div>
+
+    <!-- Si la familia está participando (confirmado) -->
+    <div *ngIf="participacion && participacion.estado === 'confirmado'">
+      <p class="mb-2">
+        <strong>Estado:</strong>
+        <span class="badge bg-success">
+          {{ participacion.estado | uppercase }}
+        </span>
+      </p>
+      <button class="btn btn-danger btn-sm" (click)="cancelarParticipacion()">
+        Cancelar participación
+      </button>
+    </div>
+
+    <!-- Si la familia canceló -->
+    <div *ngIf="participacion && participacion.estado === 'cancelado'">
+      <p class="mb-2">
+        <strong>Estado:</strong>
+        <span class="badge bg-secondary">
+          {{ participacion.estado | uppercase }}
+        </span>
+      </p>
+      <button class="btn btn-primary btn-sm" (click)="participar()">
+        Volver a participar
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- (Opcional) Si se quieres mostrar "pendiente" también -->
+<!--
+<div *ngIf="participacion && participacion.estado === 'pendiente'">
+  <p><strong>Estado:</strong> <span class="badge bg-warning text-dark">{{ participacion.estado | uppercase }}</span></p>
+  <button class="btn btn-danger w-100" (click)="cancelarParticipacion()">Cancelar</button>
+</div>
+-->
+

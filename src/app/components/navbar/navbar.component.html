@@ -1,0 +1,86 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-primary-subtle">
+  <div class="container">
+    <!--
+      Logo o branding de la aplicación.
+      Se utiliza [routerLink] para navegar a la raíz '/',
+       -->
+    <a class="navbar-brand" routerLink="/">
+      <i class="bi bi-house"></i>Plataforma Familiar
+    </a>
+
+    <!-- Botón para modo responsive (colapsar/expandir el menú en pantallas pequeñas) -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Contenedor colapsable del navbar -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!--
+        Clases de Bootstrap para alinear el contenido a la derecha (ms-auto).
+        Se usan *ngIf para mostrar diferentes opciones dependiendo
+        de la variable 'usuarioLogueado'.
+      -->
+      <ul class="navbar-nav ms-auto">
+       <!-- Siempre visible: Inicio -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+        </li>
+
+         <li class="nav-item">
+          <a class="nav-link" routerLink="/actividades" routerLinkActive="active">Actividades</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/eventos" routerLinkActive="active">Eventos</a>
+        </li>
+
+        <!-- Solo si NO hay usuario logueado -->
+        <li class="nav-item" *ngIf="!usuarioLogueado">
+          <a class="nav-link" [routerLink]="['/login']" routerLinkActive="active">
+            <i class="bi bi-box-arrow-in-right"></i> Login
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="!usuarioLogueado">
+          <a class="nav-link" [routerLink]="['/registro']" routerLinkActive="active">
+            <i class="bi bi-person-plus"></i> Registro
+          </a>
+        </li>
+
+        <!-- Opciones para miembro logueado -->
+        <li class="nav-item" *ngIf="usuarioLogueado && usuario?.rol === 'miembro'">
+          <a class="nav-link" [routerLink]="['/perfil-familia']" routerLinkActive="active">
+            <i class="bi bi-person-circle"></i> Mi Familia
+          </a>
+        </li>
+
+        <li class="nav-item" *ngIf="usuarioLogueado && usuario?.rol === 'miembro'">
+          <a class="nav-link" [routerLink]="['/perfil-usuario']" routerLinkActive="active">
+            <i class="bi bi-person-circle"></i> Mi Perfil
+          </a>
+        </li>
+       
+               
+        <!-- Opciones para administrador logueado -->
+        <li class="nav-item" *ngIf="usuarioLogueado && usuario?.rol === 'admin'">
+          <a class="nav-link" [routerLink]="['/administrador']">Admin Panel</a>
+        </li>
+
+        <!-- Logout visible solo si hay usuario logueado -->
+        <li class="nav-item" *ngIf="usuarioLogueado">
+          <a class="nav-link" href="#" (click)="logout()">
+            <i class="bi bi-box-arrow-right"></i> Logout ({{ usuario?.nombre }})
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>

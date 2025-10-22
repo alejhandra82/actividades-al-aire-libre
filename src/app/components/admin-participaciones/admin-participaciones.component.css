@@ -1,0 +1,227 @@
+/* ======= Contenedor general ======= */
+.container {
+  max-width: 1200px;
+  width: 100%;
+  min-height: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ======= Encabezado fijo ======= */
+.header-fijo {
+  width: 100%;
+  min-width: 1100px;
+  text-align: center;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 2rem 1rem;
+  margin-bottom: 2rem; 
+  top: 1rem; 
+  z-index: 10;
+}
+
+/* ======= Título ======= */
+.titulo-admin {
+  color: #198754; /* verde */
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ======= Botones de modo ======= */
+.modo-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.modo-btn {
+  min-width: 140px;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 2px solid #198754; 
+  background: transparent;
+  color: #198754;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.modo-btn:hover {
+  background: rgba(25, 135, 84, 0.1); /* verde translúcido */
+}
+
+.modo-btn.activo {
+  background: #198754; /* verde sólido */
+  color: #fff;
+}
+
+/* ======= Dropdowns ======= */
+.filtro-fijo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60px;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.dropdown {
+  width: 280px;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #198754;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  font-size: 1rem;
+  color: #333;
+  text-align: center;
+  transition: 0.2s ease;
+}
+
+.dropdown:hover, .dropdown:focus {
+  border-color: #198754;
+  box-shadow: 0 0 5px rgba(25, 135, 84, 0.3);
+}
+
+.dropdown:focus {
+  outline: none;
+}
+
+/* ======= Spinner ======= */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* ======= Tarjetas de participaciones ======= */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.col {
+  flex: 1 1 300px;
+  max-width: 350px;
+}
+
+.card--participacion {
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #e9f7ef; /* verde muy suave */
+  transition: transform 0.2s ease;
+}
+
+.card--participacion:hover {
+  transform: translateY(-5px);
+}
+
+/* ======= Contenido de la tarjeta ======= */
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+}
+
+.card-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #198754; /* verde */
+}
+
+.card-text {
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+}
+
+/* ======= Botón cancelar dentro de la tarjeta ======= */
+.btn-outline-danger {
+  border: 1px solid #dc3545;
+  background-color: transparent;
+  color: #dc3545;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-outline-danger:hover:not(:disabled) {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn-outline-danger:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ======= Estado dentro de la tarjeta ======= */
+.estado-badge {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.estado-confirmada {
+  background-color: #198754; /* verde */
+  color: #fff;
+}
+
+.estado-cancelada {
+  background-color: #dc3545; /* rojo */
+  color: #fff;
+}
+
+.estado-pendiente {
+  background-color: #ffc107; /* amarillo */
+  color: #212529;
+}
+
+/* ======= Sin resultados ======= */
+.text-muted {
+  color: #6c757d;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* ======= Responsivo ======= */
+@media (max-width: 768px) {
+  .modo-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .modo-btn {
+    width: 100%;
+  }
+
+  .dropdown {
+    width: 100%;
+  }
+
+  .col {
+    max-width: 100%;
+  }
+
+  .filtro-fijo {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

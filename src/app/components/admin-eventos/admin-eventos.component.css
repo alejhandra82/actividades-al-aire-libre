@@ -1,0 +1,45 @@
+.container {
+  max-width: 1200px;
+  padding: 0 5rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.table {
+  background-color: #fff;
+  border-radius: 0.5rem;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f5f9;
+}
+
+.modal-content {
+  border-radius: 0.5rem;
+}
+
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border-color: #dc3545;
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+@media (max-width: 768px) {
+  .table-responsive {
+    font-size: 0.9rem;
+  }
+}
+
+.tabla-centrada {
+  display: flex;
+  justify-content: center;
+}
+
+.tabla-centrada .table {
+  width: auto;
+}
+

@@ -1,0 +1,174 @@
+/* ======= Contenedor general ======= */
+.container {
+  max-width: 1200px;
+  width: 100%;
+  min-height: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ======= Encabezado fijo ======= */
+.header-fijo {
+  width: 100%;
+  min-width: 1100px;
+  text-align: center;
+  background: #fff3e0; /* fondo cálido naranja claro */
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 2rem 1rem;
+  margin-bottom: 2rem;
+  top: 1rem;
+  z-index: 10;
+}
+
+/* ======= Título ======= */
+h4.fw-bold {
+  color: #ff9800; /* naranja */
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+h4.fw-bold::before {
+  content: "💬 "; /* icono de chat antes del título */
+}
+
+/* ======= Botones de modo ======= */
+.btn-group {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-group .btn {
+  min-width: 80px;
+  max-width: 180px;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border: 2px solid #ff9800; /* borde naranja */
+  background: transparent;
+  color: #ff9800;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-group .btn.activo {
+  background: #ff9800; /* fondo naranja */
+  color: #fff;
+}
+
+.btn-group .btn:hover {
+  background: rgba(255,152,0,0.1);
+}
+
+/* ======= Filtro ======= */
+.filtro-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60px;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+select.form-select {
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: 0.2s ease;
+  width: 280px;
+  text-align: center;
+  border-color: #ff9800; /* borde naranja */
+}
+
+select.form-select:hover {
+  border-color: #fb8c00;
+}
+
+/* ======= Tarjetas ======= */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.col-md-4, .col-sm-6 {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 300px;
+  max-width: 350px;
+}
+
+.card {
+  border-radius: 0.5rem;
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #fff8e1; /* fondo suave cálido */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(255,152,0,0.3);
+}
+
+.card-title {
+  font-weight: 600;
+  color: #ff9800; /* naranja */
+}
+
+.card-text {
+  color: #6c757d;
+}
+
+.btn-outline-danger {
+  border: 1px solid #e65100;
+  color: #e65100;
+  transition: all 0.2s ease;
+}
+
+.btn-outline-danger:hover {
+  background-color: #e65100;
+  color: white;
+}
+
+/* ======= Sin resultados ======= */
+.text-muted {
+  color: #6c757d;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* ======= Responsive ======= */
+@media (max-width: 768px) {
+  .btn-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-group .btn {
+    width: 100%;
+  }
+
+  select.form-select {
+    width: 100%;
+  }
+  
+  .col-md-4, .col-sm-6 {
+    flex: 0 1 100%;
+    max-width: 100%;
+  }
+
+  .filtro-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

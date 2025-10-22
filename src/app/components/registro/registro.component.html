@@ -1,0 +1,117 @@
+<div class="container mt-5">
+  <h2>Registro de Usuario</h2>
+  <form [formGroup]="registroForm" (ngSubmit)="registrar()">
+    
+    <!-- Nombre -->
+    <div class="mb-3">
+      <label for="nombreUsuario" class="form-label">Nombre</label>
+      <input
+        type="text"
+        id="nombreUsuario"
+        class="form-control"
+        formControlName="nombreUsuario"
+      />
+      <div class="text-danger" *ngIf="mostrarError('nombreUsuario', 'required')">
+        El nombre es obligatorio.
+      </div>
+      <div class="text-danger" *ngIf="mostrarError('nombreUsuario', 'pattern')">
+        El nombre no puede contener caracteres especiales y debe tener 2-20 caracteres.
+      </div>
+    </div>
+
+    <!-- Apellidos -->
+    <div class="mb-3">
+      <label for="apellidoUsuario" class="form-label">Apellidos</label>
+      <input
+        type="text"
+        id="apellidoUsuario"
+        class="form-control"
+        formControlName="apellidoUsuario"
+      />
+      <div class="text-danger" *ngIf="mostrarError('apellidoUsuario', 'required')">
+        Los apellidos son obligatorios.
+      </div>
+      <div class="text-danger" *ngIf="mostrarError('apellidoUsuario', 'pattern')">
+        Los apellidos no pueden contener caracteres especiales y deben tener 2-20 caracteres.
+      </div>
+    </div>
+
+    <!-- Correo -->
+    <div class="mb-3">
+      <label for="correo" class="form-label">Correo</label>
+      <input
+        type="email"
+        id="correo"
+        class="form-control"
+        formControlName="correo"
+      />
+      <div class="text-danger" *ngIf="mostrarError('correo', 'required')">
+        El correo es obligatorio.
+      </div>
+      <div class="text-danger" *ngIf="mostrarError('correo', 'email')">
+        Introduce un correo válido.
+      </div>
+    </div>
+
+    <!-- Contraseña -->
+    <div class="mb-3">
+      <label for="contrasena" class="form-label">Contraseña</label>
+      <input
+        type="password"
+        id="contrasena"
+        class="form-control"
+        formControlName="contrasena"
+      />
+      <div class="text-danger" *ngIf="mostrarError('contrasena', 'required')">
+        La contraseña es obligatoria.
+      </div>
+      <div class="text-danger" *ngIf="mostrarError('contrasena', 'pattern')">
+        La contraseña debe tener al menos 6 caracteres e incluir letras y números.
+      </div>
+    </div>
+
+    <!-- Repetir Contraseña -->
+    <div class="mb-3">
+      <label for="repitePassword" class="form-label">Repite la contraseña</label>
+      <input
+        type="password"
+        id="repitePassword"
+        class="form-control"
+        formControlName="repitePassword"
+      />
+      <div class="text-danger" *ngIf="mostrarError('repitePassword', 'required')">
+        Debes repetir la contraseña.
+      </div>
+    </div>
+
+    <!-- Foto de perfil -->
+<div class="mb-3">
+  <label for="fotoPerfil" class="form-label">Foto de perfil</label>
+  <input
+    type="file"
+    id="fotoPerfil"
+    class="form-control"
+    (change)="previsualizarImagen($event)"
+  />
+</div>
+
+<!-- Previsualización -->
+<div class="mb-3 text-center">
+  <img [src]="imagenPreview" alt="Previsualización" class="img-thumbnail" width="150">
+</div>
+
+
+    <!-- Select de familia -->
+    <div class="mb-3">
+      <label for="idFamilia" class="form-label">Selecciona la familia (opcional)</label>
+      <select id="idFamilia" class="form-select" formControlName="idFamilia">
+        <option [ngValue]="null">-- Sin familia --</option>
+        <option *ngFor="let f of familias" [ngValue]="f.idFamilia">{{ f.nombreFamilia }}</option>
+      </select>
+    </div>
+
+    <!-- Botón de registro -->
+    <button type="submit" class="btn btn-primary">Registrar</button>
+  </form>
+</div>
+

@@ -1,0 +1,137 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="fw-bold text-primary">Gestión de Eventos</h4>
+    <button class="btn btn-success btn-sm" (click)="abrirModalCrear()">
+      <i class="bi bi-plus-circle"></i> Nuevo Evento
+    </button>
+  </div>
+
+  <!-- Cargando -->
+  <div *ngIf="cargando" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p class="mt-3">Cargando eventos...</p>
+  </div>
+
+  <!-- Tabla de eventos -->
+  <div *ngIf="!cargando && eventos.length > 0" class="table-responsive tabla-centrada">
+    <table class="table table-hover align-middle shadow-sm">
+      <thead class="table-light">
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Actividad</th>
+          <th>Fecha</th>
+          <th>Descripción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let evento of eventos">
+          <td>{{ evento.idEvento }}</td>
+          <td>{{ evento.nombreEvento }}</td>
+          <td>{{ evento.actividadDTO.nombreActividad || 'Sin actividad' }}</td>
+          <td>{{ evento.fechaEvento | date:'short' }}</td>
+          <td>{{ evento.descripcionEvento }}</td>
+          <td>
+  <div class="d-flex justify-content-center gap-2">
+    <button class="btn btn-outline-primary btn-sm" (click)="abrirModalEditar(evento)">
+      <i class="bi bi-pencil"></i>
+    </button>
+    <button class="btn btn-outline-danger btn-sm" (click)="eliminarEvento(evento.idEvento)">
+      <i class="bi bi-trash"></i>
+    </button>
+  </div>
+</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Sin eventos -->
+  <div *ngIf="!cargando && eventos.length === 0" class="text-center text-muted">
+    No hay eventos registrados.
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="eventoModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <form [formGroup]="eventoForm" (ngSubmit)="guardarEvento()">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title">{{ editando ? 'Editar Evento' : 'Nuevo Evento' }}</h5>
+          <button type="button" class="btn-close btn-close-white" (click)="cerrarModal()"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row g-3">
+            
+            <!-- Nombre -->
+            <div class="col-md-6">
+              <label class="form-label">Nombre *</label>
+              <input type="text" formControlName="nombreEvento" class="form-control"
+                     [ngClass]="{'is-invalid': eventoForm.get('nombreEvento')?.touched && eventoForm.get('nombreEvento')?.invalid}">
+              <div class="invalid-feedback" *ngIf="eventoForm.get('nombreEvento')?.errors?.['required']">
+                El nombre es obligatorio.
+              </div>
+              <div class="invalid-feedback" *ngIf="eventoForm.get('nombreEvento')?.errors?.['pattern']">
+                Solo se permiten letras y espacios.
+              </div>
+            </div>
+
+            <!-- Descripción -->
+            <div class="col-12">
+              <label class="form-label">Descripción *</label>
+              <textarea formControlName="descripcionEvento" class="form-control" rows="3"
+                        [ngClass]="{'is-invalid': eventoForm.get('descripcionEvento')?.touched && eventoForm.get('descripcionEvento')?.invalid}"></textarea>
+              <div class="invalid-feedback" *ngIf="eventoForm.get('descripcionEvento')?.errors?.['required']">
+                La descripción es obligatoria.
+              </div>
+              <div class="invalid-feedback" *ngIf="eventoForm.get('descripcionEvento')?.errors?.['minlength']">
+                La descripción debe tener al menos 10 caracteres.
+              </div>
+            </div>
+
+           <!-- Fecha -->
+<div class="col-md-6">
+  <label class="form-label">Fecha *</label>
+  <input type="datetime-local" formControlName="fechaEvento" class="form-control"
+         [ngClass]="{'is-invalid': eventoForm.get('fechaEvento')?.touched && eventoForm.get('fechaEvento')?.invalid}">
+  
+  <div class="invalid-feedback" *ngIf="eventoForm.get('fechaEvento')?.errors">
+    <div *ngIf="eventoForm.get('fechaEvento')?.errors?.['required']">
+      La fecha es obligatoria.
+    </div>
+    <div *ngIf="eventoForm.get('fechaEvento')?.errors?.['fechaPasada']">
+      La fecha no puede ser pasada.
+    </div>
+  </div>
+</div>
+
+
+            <!-- Actividad -->
+            <div class="col-md-12" formGroupName="actividadDTO">
+              <label class="form-label">Actividad *</label>
+              <select formControlName="idActividad" class="form-select"
+                      [ngClass]="{'is-invalid': eventoForm.get('actividadDTO.idActividad')?.touched && eventoForm.get('actividadDTO.idActividad')?.invalid}">
+                <option value="">Seleccione una actividad</option>
+                <option *ngFor="let act of actividades" [value]="act.idActividad">
+                  {{ act.nombreActividad }}
+                </option>
+              </select>
+              <div class="invalid-feedback" *ngIf="eventoForm.get('actividadDTO.idActividad')?.errors?.['required']">
+                Seleccione una actividad.
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">{{ editando ? 'Guardar cambios' : 'Crear evento' }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

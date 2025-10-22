@@ -1,0 +1,9 @@
+/* Reduce la sombra del mapa para integrarlo mejor */
+.ratio iframe {
+  border-radius: 8px;
+}
+
+/* Espacio sutil en el botón */
+button {
+  margin-top: 10px;
+}

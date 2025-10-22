@@ -1,0 +1,17 @@
+/* Estrellas clicables (formulario de opinión) */
+.star-rating i {
+  cursor: pointer;
+  font-size: 1.6rem;
+  color: #adb5bd; /* gris por defecto */
+  margin-right: 3px;
+  transition: color 0.2s ease-in-out;
+}
+
+/* Hover: colorea estrella y anteriores */
+.star-rating i:hover,
+.star-rating i.selected,
+.star-rating i:hover ~ i {
+  color: #ffc107; /* dorado */
+}
+
+
