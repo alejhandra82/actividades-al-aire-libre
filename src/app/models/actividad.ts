@@ -13,6 +13,6 @@ export interface Actividad {
   dificultad: string;            // Fácil, Media, Difícil
   precio: string;                // Ej: "Gratuito" o "10€"
   materialRecomendado: string;   // Texto libre
-  imagenPrincipal?: string;      // URL de la imagen principal
-  imagenesSecundarias?: string;  // JSON string con URLs de imágenes secundarias, ej: '["url1","url2"]'
-}
+  imagenPrincipal?: string;        // URL de la imagen principal
+  imagenUrl?: string;
+  }

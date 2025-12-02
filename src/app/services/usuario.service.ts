@@ -20,14 +20,14 @@ export class UsuarioService {
   /**
    * Llama al endpoint de login en Spring Boot
    * Devuelve un Usuario con todos los campos
-   */
-  iniciarSesion(credenciales: { correo: string; contrasena: string }): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.apiUrl}/login`, credenciales);
-  }
-
-  /**
-   * Obtener todos los usuarios (ejemplo)
-   */
+   
+  iniciarSesion(credenciales: { correo: string; contrasena: string }): Observable<any> {
+  return this.http.post<any>(`${this.apiUrl}/login`, credenciales );
+}*/
+iniciarSesion(credenciales: { correo: string; contrasena: string }): Observable<any> {
+  return this.http.post(`${this.apiUrl}/login`, credenciales, { observe: 'response', responseType: 'text' as 'json' });
+}
+  //Obtener todos los usuarios (ejemplo)   
   getUsuarios(): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(`${this.apiUrl}/usuarios`);
   }
@@ -36,11 +36,8 @@ export class UsuarioService {
   getUsuarioById(id: number): Observable<Usuario> {
   return this.http.get<Usuario>(`${this.apiUrl}/usuarios/${id}`);
 }
-
-
-  /**
-   * Crear nuevo usuario
-   */
+  
+   // Crear nuevo usuario   
   crearUsuario(usuario: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.apiUrl}/usuarios`, usuario);
   }
@@ -72,6 +69,10 @@ getFotoUsuario(idUsuario: number) {
   return this.http.get(`${this.apiUrl}/usuarios/${idUsuario}/foto`, { responseType: 'text' });
 }
 
+ //Foto Default
+obtenerFotoDefault(): Observable<string> {
+  return this.http.get(`${this.apiUrl}/usuarios/foto/default`, { responseType: 'text' });
+}
 asignarFamilia(idUsuario: number, idFamilia: number) {
   return this.http.put<Usuario>(`${this.apiUrl}/usuarios/${idUsuario}/asignar-familia/${idFamilia}`, null);
 }

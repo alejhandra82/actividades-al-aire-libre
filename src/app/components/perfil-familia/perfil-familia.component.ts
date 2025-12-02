@@ -44,7 +44,7 @@ export class PerfilFamiliaComponent implements OnInit {
     this.crearForm = this.fb.group({
       nombreFamilia: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
       correo: ['', [Validators.required, Validators.email]],
-      descripcion: ['', [Validators.maxLength(200)]],
+      descripcion: ['', [Validators.required, Validators.maxLength(200)]],
       fotoFamilia: [null]
     });
 
@@ -127,6 +127,9 @@ crearFamilia(): void {
 
   this.familiaService.crearFamilia(nuevaFamilia as Familia).subscribe({
     next: (familiaCreada) => {
+
+      //Guardar la familia creada en localStorage
+    this.sessionService.guardarFamilia(familiaCreada);
       const file: File | null = this.crearForm.value.fotoFamilia;
 
       const continuarAsignacion = () => {
@@ -134,6 +137,8 @@ crearFamilia(): void {
         this.usuarioService.asignarFamilia(idUsuario, familiaCreada.idFamilia).subscribe({
           next: (usuarioActualizado) => {
             this.sessionService.iniciarSesion(usuarioActualizado);
+            this.sessionService.guardarFamilia(familiaCreada);
+            
             this.cargarDatosFamilia(familiaCreada.idFamilia);
             this.mostrarCrearFamilia = false;
             this.alertService.success('Éxito', 'Familia creada y asignada correctamente.');
@@ -180,7 +185,7 @@ guardarCambios(): void {
       const file = this.editarForm.value.fotoFamilia as File | null;
       if (file) {
         this.familiaService.subirFotoFamilia(familiaActualizada.idFamilia, file).subscribe({
-          next: () => this.alertService.success('Éxito', 'Familia y foto actualizadas correctamente.'),
+          next: () => this.alertService.success('Éxito', 'Datos actualizados correctamente.'),
           error: () => this.alertService.error('Aviso', 'Familia actualizada, pero la foto no se pudo subir.')
         });
       } else {

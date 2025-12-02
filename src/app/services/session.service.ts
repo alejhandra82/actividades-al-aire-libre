@@ -71,18 +71,43 @@ export class SessionService {
     localStorage.setItem('familia', JSON.stringify(familia));
     this.familiaActual.next(familia);
   }
-   obtenerFamilia(): any {
-    const familia = localStorage.getItem('familia');
-    if (familia) {
-      this.familiaActual.next(JSON.parse(familia));
+  // obtenerFamilia(): any {
+  //  const familia = localStorage.getItem('familia');
+  // if (familia) {
+  //    this.familiaActual.next(JSON.parse(familia));
+  //   }
+  //return this.familiaActual.value;
+  // }
+
+  obtenerFamilia(): any {
+    const familiaStr = localStorage.getItem('familia');
+
+    if (!familiaStr || familiaStr === 'null') {
+      this.familiaActual.next(null);
+      return null;
     }
-    return this.familiaActual.value;
+
+    const familiaObj = JSON.parse(familiaStr);
+    this.familiaActual.next(familiaObj);
+    return familiaObj;
+  }
+  // Devuelve el id de la familia, o null si no hay
+  obtenerFamiliaId(): number | null {
+    const familia = this.obtenerFamilia();
+    return familia ? familia.idFamilia : null;
   }
 
-  // Devuelve el id de la familia, o null si no hay
-   obtenerFamiliaId(): number | null {
-  const familia = this.obtenerFamilia();
-  return familia ? familia.idFamilia : null;
-}
-
+  //Comprobar usuario logeado
+  isUserLoggedIn(): boolean {
+    return (
+      localStorage.getItem('usuario') !== null &&
+      localStorage.getItem('usuario') !== 'null'
+    );
+  }
+  // Comprobar si tiene familia
+  hasFamily(): boolean {
+    const familia = this.obtenerFamilia();
+    const result = familia != null && familia.idFamilia != null;
+    return result;
+  }
 }

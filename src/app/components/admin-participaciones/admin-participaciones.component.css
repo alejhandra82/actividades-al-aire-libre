@@ -55,11 +55,11 @@
 }
 
 .modo-btn:hover {
-  background: rgba(25, 135, 84, 0.1); /* verde translúcido */
+  background: rgba(25, 135, 84, 0.1); 
 }
 
 .modo-btn.activo {
-  background: #198754; /* verde sólido */
+  background: #198754; 
   color: #fff;
 }
 
@@ -201,14 +201,67 @@
   margin-top: 2rem;
 }
 
-/* ======= Responsivo ======= */
+/* Responsivo  */
+/* Tablets (pantallas medianas) */
+@media (max-width: 1024px) {
+
+  .container {
+    padding: 1.5rem;
+  }
+
+  .header-fijo {
+    min-width: 100%;     /* Evita el overflow horizontal */
+    padding: 1.5rem 1rem;
+  }
+
+  .modo-container {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .dropdown {
+    width: 100%;
+  }
+
+  .filtro-fijo {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .col {
+    max-width: 45%; /* Dos por fila en tablet */
+  }
+}
+
+/* Móviles grandes y pequeños */
 @media (max-width: 768px) {
+
+  .container {
+    padding: 1rem;
+    min-height: auto;
+  }
+
+  .header-fijo {
+    min-width: 100%;
+    padding: 1rem;
+  }
+
+  .titulo-admin {
+    font-size: 1.4rem;
+  }
+
   .modo-container {
     flex-direction: column;
-    align-items: center;
+    width: 100%;
   }
 
   .modo-btn {
+    width: 100%;
+  }
+
+  .filtro-fijo {
+    flex-direction: column;
+    gap: 0.5rem;
     width: 100%;
   }
 
@@ -216,12 +269,15 @@
     width: 100%;
   }
 
-  .col {
-    max-width: 100%;
+  .row {
+    gap: 1rem;
   }
 
-  .filtro-fijo {
-    flex-direction: column;
-    gap: 0.5rem;
+  .col {
+    max-width: 100%; /* Una tarjeta por fila en móvil */
+  }
+
+  .card--participacion {
+    padding: 1rem;
   }
 }

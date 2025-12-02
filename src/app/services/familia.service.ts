@@ -51,8 +51,6 @@ subirFotoFamilia(idFamilia: number, file: File) {
   );
 }
 
-
-
   getFotoFamilia(idFamilia: number) {
     return this.http.get(`${this.apiUrl}/familias/${idFamilia}/foto`, { responseType: 'text' });
   }

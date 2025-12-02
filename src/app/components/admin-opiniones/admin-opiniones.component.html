@@ -1,9 +1,8 @@
-<div class="container my-4">
-
+<div class="container">
   <!-- ======= Encabezado ======= -->
-  <div class="header-fijo text-center bg-white p-4 rounded shadow-sm mb-4">
-    <h4 class="fw-bold mb-3">Gestión de Opiniones</h4>
-
+  <div class="header-fijo ">
+    <h4 class="fw-bold mb-3 text-dark-emphasis">
+  <i class="fa fa-comments me-2"></i> Gestión de Opiniones</h4>
     <!-- Botones de modo -->
     <div class="btn-group">
       <button class="btn btn" [class.activo]="modoVista === 'todas'" (click)="cambiarModo('todas')">
@@ -43,14 +42,19 @@
     <div *ngFor="let op of opiniones" class="col-md-4 col-sm-6 mb-4">
       <div class="card shadow-sm border-0 h-100">
         <div class="card-body d-flex flex-column justify-content-between">
-          <h5 class="card-title">{{ op.actividadDTO?.nombreActividad }}</h5>
+          <h5 class="card-title text-center">{{ op.actividadDTO?.nombreActividad }}</h5>
           <p class="card-text mb-1"><strong>Familia:</strong> {{ op.familiaDTO?.nombreFamilia }}</p>
-          <p class="card-text mb-1"><strong>Puntuación:</strong> {{ op.puntuacion }}/5</p>
-          <p class="card-text"><strong>Comentario:</strong> {{ op.comentario }}</p>
-          <p class="text-muted small">🗓️ {{ op.fechaOpinion | date:'dd/MM/yyyy' }}</p>
-
+          <p class="card-text mb-1"><strong>Puntuación:   </strong><span class="stars">
+              <ng-container *ngFor="let s of [1,2,3,4,5]">
+              <i class="bi" [ngClass]="{
+                'bi-star-fill': s <= op.puntuacion,
+                'bi-star': s > op.puntuacion}"></i>
+              </ng-container>
+              </span></p>
+          <p class="card-text"><strong>Comentario: </strong>  <span class="text-dark">{{ op.comentario }}</span></p>
+          <p class="text-muted small"><i class="fa-solid fa-calendar-days"></i>     {{ op.fechaOpinion | date:'dd/MM/yyyy' }}</p>
           <button class="btn btn-outline-danger mt-2" (click)="eliminarOpinion(op.idOpinion!)">
-            🗑️ Eliminar opinión
+            <i class="fa-solid fa-trash"></i> Eliminar opinión
           </button>
         </div>
       </div>
@@ -59,7 +63,7 @@
 
   <!-- ======= Sin resultados ======= -->
   <div *ngIf="!cargando && opiniones.length === 0" class="text-center text-muted">
-     <i class="bi bi-info-circle"></i>No hay opiniones registradas para esta selección.
+     <i class="bi bi-info-circle text-danger"></i>   No hay opiniones registradas para esta selección.
   </div>
 
 </div>

@@ -1,0 +1,64 @@
+/* Fondos de columnas */
+.login-left {
+  height: 90%;
+  background-image: url('/assets/senderismo2.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.login-right {
+  height: 90%;
+  background-image: url('/assets/paseoRio.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+/* Icono ver/ocultar contraseña */
+.toggle-password {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  color: #6c757d;   /* opcional para color del ojo */
+}
+
+/* Botón con color personalizado */
+.btn-login {
+  background-color: #FFA07A;
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+.btn-login:hover {
+  background-color: #ff7f50;
+}
+
+/* Enlace registro */
+.register-link {
+  color: #2e7d32;
+  text-decoration: underline;
+}
+
+.register-link:hover {
+  color: #1b5e20;
+  text-decoration: none;
+}
+
+/* Cambiar borde y sombra cuando el input está enfocado */
+.form-control:focus {
+  border-color: #FFA07A; /* color del borde al hacer focus */
+  box-shadow: 0 0 0 0.25rem rgba(255, 160, 122, 0.25); /* sombra opcional */
+  outline: none; /* quita el borde azul por defecto de algunos navegadores */
+}
+
+@media (max-width: 768px) {
+  .login-form-wrapper {
+    top: 75% !important;
+    transform: translateX(-50%) !important;
+  }
+
+  
+}
+

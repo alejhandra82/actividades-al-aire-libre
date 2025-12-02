@@ -1,4 +1,52 @@
-<div class="container py-5">
+<div class="actividades-container py-5 px-3">
+
+  <!-- Título dinamico -->
+  <h2 class="text-center text-warning fw-bold mb-4">
+  {{ limit ? 'Actividades Destacadas' : 'Nuestras Actividades' }}
+  </h2>
+
+  <!-- Filtro por tipo (solo si no hay límite) -->
+  <div *ngIf="!limit" class="text-center mb-5 filtro-container">
+    <label for="tipoFiltro" class="form-label me-2 fw-bold">Buscar por tipo de actividad:</label>
+    <select id="tipoFiltro" class="form-select d-inline-block w-auto shadow-sm rounded"
+            [(ngModel)]="tipoFiltro"
+            (change)="onTipoCambio()">
+      <option value="">Todos</option>
+      <option *ngFor="let tipo of tipos" [value]="tipo">{{ tipo }}</option>
+    </select>
+  </div>
+
+  <!-- Listado de actividades -->
+<div class="row g-4">
+  <div class="col-sm-6 col-md-4" *ngFor="let actividad of actividades">
+    <div class="card h-100 actividad-card">
+      <img [src]="actividad.imagenUrl"
+         class="card-img-top actividad-img"
+         alt="{{ actividad.nombreActividad }}">
+
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title text-bg-success text-uppercase text-center">{{ actividad.nombreActividad }}</h5>
+        <p class="card-text text">{{ actividad.descripcion | slice:0:100 }}...</p>
+        <p class="card-text"><small class="text-muted">{{ actividad.ubicacion }}</small></p>
+        <a [routerLink]="['/actividad', actividad.idActividad]" class="btn btn-warning mt-2">Ver Detalle</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Botón “Ver todas” solo si hay límite -->
+  <div class="text-center mt-4 bold" *ngIf="limit">
+    <a routerLink="/actividades" class="btn btn-outline-warning btn-lg rounded-pill">
+      Ver todas las actividades
+    </a>
+  </div>
+
+</div>
+
+
+
+<!--<div class="container py-5">
 <div class="row row-cols-1 row-cols-md-3 g-4">
   <div class="col" *ngFor="let actividad of actividades">
     <div class="card h-100 shadow-sm">

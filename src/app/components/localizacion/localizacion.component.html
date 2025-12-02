@@ -1,10 +1,4 @@
 <div *ngIf="localizaciones.length > 0; else sinLocalizacion">
-  <!-- Título pequeño con ícono 
-  <div class="d-flex align-items-center mb-2">
-    <i class="bi bi-geo-alt-fill text-primary me-2"></i>
-    <h6 class="mb-0">Ubicación</h6>
-  </div>-->
-
   <!-- Dirección -->
   <p class="mb-2 text-muted small">Dirección</p>
   <h6 class="fw-normal">{{ localizaciones[0].direccion }}</h6>
@@ -22,7 +16,7 @@
   <!-- Botón Google Maps -->
   <div class="text-center mt-3">
     <button
-      class="btn btn-outline-primary btn-sm"
+      class="btn btn-outline-success btn-sm"
       (click)="abrirEnGoogleMaps()">
       <i class="bi bi-box-arrow-up-right me-1"></i> Ver en Google Maps
     </button>

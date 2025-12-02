@@ -2,34 +2,33 @@
   <!-- SIDEBAR -->
   <nav id="sidebar" [class.collapsed]="!sidebarOpen" class="bg-white border-end p-3 shadow-sm">
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h5 class="text-primary mb-0">Panel Administración</h5>
+      <h4 class="text-dark-emphasis mb-0">Panel Administración</h4>
       <button class="btn btn-sm d-md-none" (click)="toggleSidebar()">✕</button>
     </div>
 
     <ul class="nav nav-pills flex-column">
       <li class="nav-item mb-2">
-        <a routerLink="/administrador" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link d-flex align-items-center">
-          <span class="me-2">🏠</span> Dashboard
-        </a>
-      </li>
-      <li class="nav-item mb-2">
         <a routerLink="/administrador/actividades" routerLinkActive="active" class="nav-link d-flex align-items-center">
-          <span class="me-2">📋</span> Actividades
+          <span class="me-2">📋</span> 
+          <span class="label">Actividades</span>
         </a>
       </li>
       <li class="nav-item mb-2">
         <a routerLink="/administrador/eventos" routerLinkActive="active" class="nav-link d-flex align-items-center">
-          <span class="me-2">🎟️</span> Eventos
+          <span class="me-2">🎟️</span> 
+          <span class="label">Eventos</span>
         </a>
       </li>
       <li class="nav-item mb-2">
         <a routerLink="/administrador/participaciones" routerLinkActive="active" class="nav-link d-flex align-items-center">
-          <span class="me-2">👨‍👩‍👧‍👦</span> Participaciones
+          <span class="me-2">👨‍👩‍👧‍👦</span> 
+          <span class="label">Participaciones</span>
         </a>
       </li>
       <li class="nav-item mb-2">
         <a routerLink="/administrador/opiniones" routerLinkActive="active" class="nav-link d-flex align-items-center">
           <span class="me-2">💬</span> Opiniones
+          
         </a>
       </li>
     </ul>
@@ -40,7 +39,7 @@
     <!-- header interior -->
     <div class="d-flex justify-content-between align-items-center p-3 border-bottom bg-white">
       <div class="d-flex align-items-center">
-        <button class="btn btn-outline-primary me-3 d-md-none" (click)="toggleSidebar()">☰</button>        
+        <button class="btn btn-outline-success me-3 d-md-none" (click)="toggleSidebar()">☰</button>        
       </div>
       
 

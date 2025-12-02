@@ -1,66 +1,15 @@
-body {
+/*body {
   font-family: 'Open Sans', sans-serif;
-  background-color: #fffbea; /* crema suave */
+  background-color: #fffbea;
   color: #333;
-}
+}*/
 
-h1, h2, h3, h4, h5 {
+h1 {
   font-family: 'Montserrat', sans-serif;
 }
 
-.hero {
-  background-image: url('assets/familia-senderismo.jpg');
-  background-size: cover;
-  background-position: left;
-  position: relative;
-  color: white;
-
-  min-height: 80vh; /* 80% de la altura de la ventana */
-  display: flex;
-  align-items: center; /* Centra verticalmente el contenido */
-  justify-content: center;
-  text-align: center;
+/* Ocultar el icono nativo de Edge */
+input::-ms-reveal,
+input::-ms-clear {
+    display: none !important;
 }
-
-
-.btn-warning {
-  background-color: #fdfdfc;
-  border-color: #FFA07A;
-}
-
-.btn-warning:hover {
-  background-color: #ff7f50;
-  border-color: #ff7f50;
-}
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  background-color: rgba(0, 0, 0, 0.3); /* sombra suave */
-  border-radius: 50%;
-}
-
-.actividad-circle {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background-color: #2E8B57;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.actividad-circle img {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-}
-
-.actividad-circle:hover {
-  transform: scale(1.1);
-  background-color: #276946;
-}
-

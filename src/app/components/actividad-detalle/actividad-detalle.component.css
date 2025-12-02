@@ -1,5 +1,4 @@
 /* Contenedor de la imagen principal */
-/* Contenedor de la imagen principal */
 .imagen-principal-container {
   max-width: 100%;         /* se adapta al ancho del contenedor */
   overflow: hidden;
@@ -19,38 +18,4 @@
   transform: scale(1.03);
 }
 
-/* Miniaturas */
-.miniatura {
-  width: 80px;
-  height: 80px;
-  border-radius: 0.5rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-  object-fit: cover;
-}
 
-.miniatura:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-/* Responsive: ajusta el tamaño de miniaturas en pantallas pequeñas */
-@media (max-width: 576px) {
-  .miniatura {
-    width: 60px;
-    height: 60px;
-  }
-}
-
-@media (min-width: 577px) and (max-width: 768px) {
-  .miniatura {
-    width: 70px;
-    height: 70px;
-  }
-}
-
-/* Flexible: permite que las miniaturas se acomoden en varias filas automáticamente */
-.d-flex.flex-wrap {
-  justify-content: center;
-  gap: 0.5rem;
-}

@@ -1,95 +1,153 @@
 <div class="container mt-4">
 
-  <!-- Vista de creación -->
+  <!-- VISTA CREAR FAMILIA -->
   <div *ngIf="mostrarCrearFamilia">
-    <h3 class="mb-4">Crear nueva familia</h3>
-    <form [formGroup]="crearForm" (ngSubmit)="crearFamilia()">
-      <div class="row">
-        <!-- Imagen -->
-        <div class="col-md-4 text-center">
-          <img [src]="imagenPreview" alt="Foto familia" class="img-fluid rounded shadow mb-3" style="max-height: 220px;">
-          <div class="mb-3">
-            <label class="form-label">Foto de la familia</label>
-            <input type="file" class="form-control" (change)="previsualizarImagen($event, crearForm)">
+    <div class="card shadow p-4">
+      <h3 class="mb-4 border-bottom pb-2 text-center text-dark-emphasis">Crear nueva familia</h3>
+
+      <form [formGroup]="crearForm" (ngSubmit)="crearFamilia()">
+        <div class="row">
+
+          <!-- Imagen -->
+          <div class="col-md-4 text-center">
+
+            <div class="border rounded bg-light p-2 mb-3">
+              <img [src]="imagenPreview"
+                   alt="Foto familia"
+                   class="img-fluid rounded"
+                   style="max-height: 220px;">
+            </div>
+
+            <!-- Botón  -->
+            <label class="btn btn-salmon rounded-pill w-100 mb-3">
+              Cargar foto
+              <input type="file" class="d-none"
+                     (change)="previsualizarImagen($event, crearForm)">
+            </label>
+          </div>
+
+          <!-- Datos -->
+          <div class="col-md-8">
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Nombre de la familia</label>
+              <input type="text" class="form-control"
+                     placeholder="Ej: Familia Ramírez"
+                     formControlName="nombreFamilia">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Correo</label>
+              <input type="email" class="form-control"
+                     placeholder="ejemplo@correo.com"
+                     formControlName="correo">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Descripción</label>
+              <textarea class="form-control" rows="3"
+                        placeholder="Escribe una breve descripción..."
+                        formControlName="descripcion"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success w-50 mt-2 d-block mx-auto">
+              Crear familia
+            </button>
+
           </div>
         </div>
-
-        <!-- Datos -->
-        <div class="col-md-8">
-          <div class="mb-3">
-            <label class="form-label">Nombre de la familia</label>
-            <input type="text" class="form-control" formControlName="nombreFamilia">
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Correo</label>
-            <input type="email" class="form-control" formControlName="correo">
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Descripción</label>
-            <textarea class="form-control" formControlName="descripcion" rows="3"></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-success w-100">Crear familia</button>
-        </div>
-      </div>
-    </form>
-  </div>
-
-  <!-- Vista de perfil -->
-  <div *ngIf="!mostrarCrearFamilia && familia">
-    <h3 class="mb-4">Perfil de la familia</h3>
-    <form [formGroup]="editarForm" (ngSubmit)="guardarCambios()">
-      <div class="row">
-        <!-- Imagen -->
-        <div class="col-md-4 text-center">
-          <img [src]="imagenPreview" alt="Foto familia" class="img-thumbnail rounded-circle" style="width: 200px; height: 200px; object-fit: contain;">
-          <div class="mb-3">
-
-           
-            <!--<label class="form-label">Actualizar foto</label> -->
-            <input type="file" class="form-control" (change)="previsualizarImagen($event, editarForm)">
-          </div>
-        </div>
-
-        <!-- Datos -->
-        <div class="col-md-8">
-          <div class="mb-3">
-            <label class="form-label">Nombre de la familia</label>
-            <input type="text" class="form-control" formControlName="nombreFamilia">
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Correo</label>
-            <input type="email" class="form-control" formControlName="correo">
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Descripción</label>
-            <textarea class="form-control" formControlName="descripcion" rows="3"></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary lh-base">Guardar cambios</button>
-        </div>
-      </div>
-    </form>
-
-    <hr class="my-4">
-
-    <!-- Miembros -->
-<h4 class="mb-3">Miembros de la familia</h4>
-<div class="row">
-  <div *ngFor="let miembro of miembros" class="col-md-4 col-sm-6 mb-3">
-    <div class="card shadow-sm h-100 text-center">
-      <div class="card-body">
-        <!-- Avatar con iniciales -->
-        <div class="avatar mb-3" [ngStyle]="{ 'background-color': getAvatarColor(miembro) }">
-  {{ miembro.nombreUsuario.charAt(0) }}{{ miembro.apellidoUsuario.charAt(0) }}
-</div>
-        <h5 class="card-title">{{ miembro.nombreUsuario }}</h5>
-        <p class="card-text text-muted">{{ miembro.correo }}</p>
-      </div>
+      </form>
     </div>
   </div>
+
+  <!-- VISTA PERFIL FAMILIA -->
+  <div *ngIf="!mostrarCrearFamilia && familia">
+    <div class="card shadow p-4 mb-4">
+      <h2 class="mb-4 border-bottom pb-2 text-center text-dark-emphasis">PERFIL DE LA FAMILIA</h2>
+
+      <form [formGroup]="editarForm" (ngSubmit)="guardarCambios()">
+        <div class="row">
+
+          <!-- Imagen -->
+          <div class="col-md-4 text-center">
+
+            <div class="border rounded-circle bg-light p-2 mb-3 d-flex justify-content-center">
+              <img [src]="imagenPreview"
+                   alt="Foto familia"
+                   class="rounded-circle img-thumbnail"
+                   style="width: 200px; height: 200px; object-fit: contain;">
+            </div>
+
+            <!-- Botón -->
+            <label class="btn btn-salmon rounded-pill w-100 mb-3">
+              Cambiar imagen
+              <input type="file" class="d-none"
+                     (change)="previsualizarImagen($event, editarForm)">
+            </label>
+
+          </div>
+
+          <!-- Datos -->
+          <div class="col-md-8">
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Nombre de la familia</label>
+              <input type="text" class="form-control"
+                     formControlName="nombreFamilia">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Correo</label>
+              <input type="email" class="form-control"
+                     formControlName="correo">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Descripción</label>
+              <textarea class="form-control" rows="3"
+                        formControlName="descripcion"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 mt-2">
+              Guardar cambios
+            </button>
+
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- MIEMBROS DE LA FAMILIA -->
+    <div class="card shadow p-4">
+      <h4 class="mb-3 border-bottom pb-2">Miembros de la familia</h4>
+
+      <div class="row">
+        <div *ngFor="let miembro of miembros" class="col-md-4 col-sm-6 mb-3">
+
+          <div class="card shadow-sm h-100 text-center p-3">
+
+            <!-- Avatar -->
+            <div class="avatar mx-auto mb-3 d-flex align-items-center justify-content-center
+                        text-white fw-bold"
+                 [ngStyle]="{
+                    'background-color': getAvatarColor(miembro),
+                    'width': '70px',
+                    'height': '70px',
+                    'border-radius': '50%',
+                    'font-size': '1.3rem'
+                 }">
+              {{ miembro.nombreUsuario.charAt(0) }}{{ miembro.apellidoUsuario.charAt(0) }}
+            </div>
+
+            <h5 class="card-title">{{ miembro.nombreUsuario }}</h5>
+            <p class="text-muted">{{ miembro.correo }}</p>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>

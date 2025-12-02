@@ -19,10 +19,16 @@ declare var bootstrap: any;
 export class AdminEventosComponent implements OnInit {
   eventos: Evento[] = [];
   actividades: Actividad[] = [];
+  eventosFiltrados: Evento[] = [];
   eventoForm!: FormGroup;
   cargando = false;
   editando = false;
   modal!: any;
+
+  //  VARIABLES PARA FILTROS 
+  modoVista: 'todas' | 'actividad' | 'nombre' = 'todas';
+  filtroActividad: number | null = null;
+  filtroNombre: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -55,6 +61,7 @@ export class AdminEventosComponent implements OnInit {
       next: (data) => {
         console.log(data);
         this.eventos = data;
+        this.eventosFiltrados = data;
         this.cargando = false;
       },
       error: () => {
@@ -71,6 +78,42 @@ export class AdminEventosComponent implements OnInit {
     });
   }
 
+  // FILTRO
+  cambiarModo(modo: 'todas' | 'actividad' | 'nombre'): void {
+    this.modoVista = modo;
+    this.filtroActividad = null;
+    this.filtroNombre = '';
+    this.aplicarFiltros();
+  }
+
+  onActividadSeleccionada(idTipo: string): void {
+    this.filtroActividad = idTipo ? Number(idTipo) : null;
+    this.aplicarFiltros();
+  }
+
+  onNombreIngresado(texto: string): void {
+    this.filtroNombre = texto.trim().toLowerCase();
+    this.aplicarFiltros();
+  }
+
+  aplicarFiltros(): void {
+    if (this.modoVista === 'todas') {
+      this.eventosFiltrados = [...this.eventos];
+    } 
+    else if (this.modoVista === 'actividad' && this.filtroActividad) {
+      this.eventosFiltrados = this.eventos.filter(
+        e => e.actividadDTO?.idActividad === this.filtroActividad
+      );
+    } 
+    else if (this.modoVista === 'nombre' && this.filtroNombre) {
+      this.eventosFiltrados = this.eventos.filter(
+        e => e.nombreEvento.toLowerCase().includes(this.filtroNombre)
+      );
+    } 
+    else {
+      this.eventosFiltrados = [];
+    }
+  }
   abrirModalCrear() {
     this.editando = false;
     this.eventoForm.reset();
@@ -120,6 +163,7 @@ export class AdminEventosComponent implements OnInit {
 
   guardarEvento() {
     if (this.eventoForm.invalid) {
+      this.alertService.info('Formulario incompleto', 'Por favor completa todos los campos obligatorios.');
       this.eventoForm.markAllAsTouched();
       return;
     }

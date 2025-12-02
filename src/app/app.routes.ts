@@ -24,7 +24,7 @@ export const routes: Routes = [
     path: 'administrador',
     component: AdministradorComponent,
     children: [
-      { path: '', loadComponent: () => import('./components/admin-dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent) },
+      { path: '', redirectTo: 'actividades', pathMatch: 'full' },
       { path: 'actividades', loadComponent: () => import('./components/admin-actividades/admin-actividades.component').then(m => m.AdminActividadesComponent) },
       { path: 'eventos', loadComponent: () => import('./components/admin-eventos/admin-eventos.component').then(m => m.AdminEventosComponent) },
       { path: 'participaciones', loadComponent: () => import('./components/admin-participaciones/admin-participaciones.component').then(m => m.AdminParticipacionesComponent) },

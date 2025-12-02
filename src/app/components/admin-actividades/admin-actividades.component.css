@@ -54,7 +54,7 @@
 }
 .card-title {
   font-weight: 600;
-  color: #3a57e8;
+  color: #344a72;
   align-items:center;
 }
 
@@ -65,22 +65,22 @@
 
 /* ================== Botones ================== */
 .btn-success {
-  background-color: #3a57e8;
-  border-color: #3a57e8;
+  background-color: #344a72;
+  border-color: #344a72;
 }
 
 .btn-success:hover {
-  background-color: #3146c8;
-  border-color: #3146c8;
+  background-color: #2a3c5a;
+  border-color: #2a3c5a;
 }
 
 .btn-outline-primary {
-  color: #3a57e8;
-  border-color: #3a57e8;
+  color: #344a72;
+  border-color: #344a72;
 }
 
 .btn-outline-primary:hover {
-  background-color: #3a57e8;
+  background-color: #2a3c5a;
   color: #fff;
 }
 
@@ -97,7 +97,7 @@
 /* ================== Modal ================== */
 .modal-header {
   border-bottom: 1px solid #dee2e6;
-  background-color: #3a57e8;
+  background-color: #344a72;
   color: #fff;
 }
 
@@ -160,7 +160,7 @@ textarea.form-control {
 .titulo-admin {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #3a57e8;
+  color: #344a72;
   margin-bottom: 1.5rem;
  
 }
@@ -178,7 +178,7 @@ textarea.form-control {
   min-width: 140px;
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
-  border: 2px solid #3a57e8;
+  border: 2px solid #344a72;
   background: #f0f0f0;
   font-weight: 600;
   color: #333;
@@ -191,7 +191,7 @@ textarea.form-control {
 }
 
 .modo-btn.activo {
-  background-color: #3a57e8;
+  background-color: #344a72;
   color: white;
   box-shadow: 0 2px 6px rgba(58, 87, 232, 0.3);
 }
@@ -215,7 +215,7 @@ textarea.form-control {
 
 .dropdown:focus,
 .input-filtro:focus {
-  border-color: #3a57e8;
+  border-color: #344a72;
   outline: none;
 }
 
@@ -340,4 +340,7 @@ textarea.form-control {
   .card-text {
     font-size: 0.9rem;
   }
+  .btn{
+  background-color: #344a72;
+}
 }

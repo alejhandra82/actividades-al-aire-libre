@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, ElementRef, ViewChild } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { EventoService } from '../../services/eventos.service';
@@ -11,14 +12,17 @@ import { ParticipacionComponent } from '../participacion/participacion.component
 @Component({
   selector: 'app-eventos',
   standalone: true,
-  imports: [CommonModule, ParticipacionComponent],
+  imports: [CommonModule, RouterModule, ParticipacionComponent],
   templateUrl: './eventos.component.html',
   styleUrls: ['./eventos.component.css']
 })
 export class EventosComponent implements OnInit, OnChanges {
   @Input() actividadId?: number;
   @Input() estilo: 'lista' | 'catalogo' = 'catalogo';  // por defecto catálogo
-  
+  @Input() limit?: number;
+  @Input() mostrarParticipacion: boolean = true;
+  @ViewChild('scrollContainer', { static: false }) scrollContainer!: ElementRef;
+
   familia: any = null;
   eventos: Evento[] = [];
   participacionesFamilia: { [eventoId: number]: string } = {};
@@ -34,7 +38,7 @@ export class EventosComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.familia = this.sessionService.obtenerFamilia();
 
-    // 👇 caso inicial: si ya tenemos id, carga por actividad
+    // Caso inicial: si ya tenemos id, carga por actividad
     if (this.actividadId) {
       this.cargarEventosPorActividad();
     } else {
@@ -52,14 +56,20 @@ export class EventosComponent implements OnInit, OnChanges {
     }
   }
 
+  private filtrarFuturos(eventos: Evento[]): Evento[] {
+    const hoy = new Date();
+    return eventos.filter(e => new Date(e.fechaEvento) >= hoy);
+  }
   private cargarEventosPorActividad(): void {
-    console.log('Cargando eventos por actividadId=', this.actividadId);
-
     this.eventosService.getEventosByActividad(this.actividadId!).subscribe({
       next: (data) => {
-        this.eventos = data;
+        this.eventos = this.filtrarFuturos(data)
+                          .sort((a, b) => new Date(a.fechaEvento).getTime() - new Date(b.fechaEvento).getTime());
+        if (this.limit) {
+          this.eventos = this.eventos.slice(0, this.limit);
+        }
         if (this.eventos.length === 0) {
-          this.alertService.info('Eventos', 'No hay eventos disponibles para esta actividad.');
+          this.alertService.info('Eventos', 'No hay eventos futuros para esta actividad.');
         }
       },
       error: (err) => {
@@ -70,13 +80,13 @@ export class EventosComponent implements OnInit, OnChanges {
   }
 
   private cargarTodosEventos(): void {
-    console.log('Cargando todos los eventos...');
-
     this.eventosService.getEventos().subscribe({
       next: (data) => {
-        this.eventos = data;
+        let futuros = this.filtrarFuturos(data)
+                         .sort((a, b) => new Date(a.fechaEvento).getTime() - new Date(b.fechaEvento).getTime());
+        this.eventos = this.limit ? futuros.slice(0, this.limit) : futuros;
         if (this.eventos.length === 0) {
-          this.alertService.info('Eventos', 'No hay eventos disponibles en este momento.');
+          this.alertService.info('Eventos', 'No hay eventos futuros disponibles.');
         }
       },
       error: (err) => {
@@ -85,4 +95,16 @@ export class EventosComponent implements OnInit, OnChanges {
       },
     });
   }
+
+ moverDerecha() {
+  const container = this.scrollContainer.nativeElement;
+  const cardWidth = 300 + 16; // ancho + margen horizontal (mx-2)
+  container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+}
+
+moverIzquierda() {
+  const container = this.scrollContainer.nativeElement;
+  const cardWidth = 300 + 16;
+  container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+}
 }

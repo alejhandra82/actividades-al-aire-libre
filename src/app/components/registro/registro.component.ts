@@ -16,9 +16,10 @@ import { Familia } from '../../models/familia';
 export class RegistroComponent implements OnInit {
   registroForm: FormGroup;
   familias: Familia[] = [];
-  // Variable para mostrar la imagen seleccionada o la por defecto
-imagenPreview: string = 'https://airelibrestorage.blob.core.windows.net/imagenes/usuarios/default.png';
-
+   imagenPreview: string = 'https://airelibrestorage.blob.core.windows.net/imagenes/usuarios/default.png';
+   mostrarContrasena: boolean = false;
+   mostrarRepite: boolean = false;
+ 
 
   constructor(
     private fb: FormBuilder,
@@ -34,10 +35,25 @@ imagenPreview: string = 'https://airelibrestorage.blob.core.windows.net/imagenes
       repitePassword: ['', Validators.required],
       idFamilia: [null],
       fotoPerfil: [null],
+      },
+  {
+      validators: this.passwordsCoinciden
     });
   }
 
+  passwordsCoinciden(form: FormGroup) {
+  const pass = form.get('contrasena')?.value;
+  const repite = form.get('repitePassword')?.value;
+
+  if (pass !== repite) {
+    form.get('repitePassword')?.setErrors({ noCoinciden: true });
+  } else {
+    form.get('repitePassword')?.setErrors(null);
+  }
+}
+
   ngOnInit(): void {
+    this.imagenPreview = 'https://airelibrestorage.blob.core.windows.net/imagenes/usuarios/default.png';
     this.cargarFamilias();
   }
 
@@ -93,7 +109,14 @@ imagenPreview: string = 'https://airelibrestorage.blob.core.windows.net/imagenes
         this.router.navigate(['/login']);
       }
     },
-    error: () => this.alertService.error('Error', 'No se pudo registrar el usuario.')
+   error: (err) => {
+  if (err.error && err.error.message === "CORREO_YA_EXISTE") {
+    this.alertService.error('Error', 'Este correo ya está registrado. Usa otro.');
+  } else {
+    this.alertService.error('Error', 'No se pudo registrar el usuario.');
+  }
+}
+
   });
 }
 
@@ -104,7 +127,7 @@ imagenPreview: string = 'https://airelibrestorage.blob.core.windows.net/imagenes
   }
 
   // Método para actualizar la previsualización cuando el usuario selecciona un archivo
-previsualizarImagen(event: Event): void {
+  previsualizarImagen(event: Event): void {
   const input = event.target as HTMLInputElement;
   if (input.files && input.files[0]) {
     const file = input.files[0];

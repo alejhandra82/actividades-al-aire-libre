@@ -1,31 +1,57 @@
 <!-- LISTADO DE OPINIONES PARA ACTIVIDAD-DETALLE -->
-<div *ngIf="idActividad">
-  <h5>Opiniones</h5>
+<div *ngIf="idActividad" class="mt-4">
+  <!-- Listado de opiniones -->
+  <div *ngFor="let opinion of opiniones; let i = index" 
+       class="card mb-3 shadow-sm rounded-4 p-3 hover-card"
+       [ngClass]="i % 2 === 0 ? 'bg-white' : 'bg-light'">
+       
+    <div class="d-flex align-items-start">
 
-  <!-- Opiniones existentes -->
-  <div *ngFor="let opinion of opiniones" class="card mb-3 shadow-sm">
-    <div class="card-body">
-      <h6 class="card-subtitle mb-2 text-muted">
-        {{ opinion.familiaDTO?.nombreFamilia || 'Familia' }}
-        <small class="text-secondary">
-          - {{ opinion.fechaOpinion | date:'short' }}
-        </small>
-      </h6>
-      <p class="card-text">{{ opinion.comentario }}</p>
+      <!-- Avatar/ícono de familia -->
+      <div class="me-3">
+        <i class="bi bi-person-circle avatar-circle"></i>
+      </div>
 
-      <!-- Estrellas SOLO para mostrar -->
-      <div class="star-rating ms-2">
-        <i class="bi"
-           *ngFor="let s of [1,2,3,4,5]"
-           [ngClass]="{
-             'bi-star-fill text-warning': s <= opinion.puntuacion,
-             'bi-star text-muted': s > opinion.puntuacion
-           }"
-           style="font-size: 1.2rem; margin-right: 4px;">
-        </i>
+      <!-- Contenido de la opinión -->
+      <div class="flex-grow-1">
+
+        <!-- Nombre y fecha -->
+        <div class="d-flex justify-content-between align-items-center mb-1">
+          <h6 class="fw-bold text-success mb-0">
+            {{ opinion.familiaDTO?.nombreFamilia || 'Familia' }}
+          </h6>
+          <small class="text-muted">{{ opinion.fechaOpinion | date:'short' }}</small>
+        </div>
+
+        <!-- Comentario -->
+        <p class="mb-2 fs-6 text-dark">
+          {{ opinion.comentario }}
+        </p>
+
+        <!-- Estrellas -->
+        <div class="d-flex align-items-center">
+          <i class="bi"
+             *ngFor="let s of [1,2,3,4,5]"
+             [ngClass]="{
+               'bi-star-fill text-warning': s <= opinion.puntuacion,
+               'bi-star text-secondary': s > opinion.puntuacion
+             }"
+             style="font-size: 1.2rem; margin-right: 3px;">
+          </i>
+        </div>
+
       </div>
     </div>
   </div>
+
+  <!-- Mensaje si no hay opiniones -->
+  <div *ngIf="opiniones.length === 0" class="text-center text-muted mt-3">
+    <i class="bi bi-info-circle me-1"></i>No hay opiniones aún.
+  </div>
+
+
+
+
 
   <!-- FORMULARIO PARA NUEVA OPINIÓN -->
   <!-- Solo si: hay familia, ha participado, y el formulario está habilitado -->
@@ -65,7 +91,7 @@
     </div>
 
     <!-- Botón -->
-    <button class="btn btn-primary"
+    <button class="btn btn-info"
             type="submit"
             [disabled]="formularioOpinion.invalid">
       Guardar
@@ -78,10 +104,9 @@
     <div class="mb-3">
       <i class="bi bi-emoji-smile text-warning" style="font-size: 3rem;"></i>
     </div>
-    <h5 class="text-primary">¡Gracias por tu opinión!</h5>
+    <h5 class="text-info">¡Gracias por tu opinión!</h5>
     <p class="text-muted">
       Ya has dejado tu opinión para esta actividad.<br>
-      Solo puedes enviar una opinión por familia.
     </p>
   </div>
 
@@ -92,60 +117,51 @@
   </div>
 </div>
 
-<!-- Carrusel de Opiniones Destacadas (para Home) -->
-<div *ngIf="opinionesDestacadas.length > 0" class="home-carousel mt-4">
-  <h5 class="mb-3 text-center">Lo que opinan las familias</h5>
+<!-- Opiniones en burbujas circulares (Home) -->
+<div *ngIf="opinionesDestacadas.length > 0" class="mt-4 text-center">
 
-  <div id="carouselOpinionesHome" 
-       class="carousel slide" 
-       data-bs-ride="carousel" 
-       data-bs-interval="3000">
+ 
+    <h2 class="text-center text-warning fw-bold mb-4">Lo que opinan nuestras familias</h2>
+    
 
-    <!-- Items del carrusel -->
-    <div class="carousel-inner">
-      <div *ngFor="let opinion of opinionesDestacadas; let i = index" 
-           class="carousel-item" 
-           [class.active]="i === 0">
-        <div class="card mx-auto p-3 text-center" style="max-width: 350px;">
-          
-          <!-- Foto de familia -->
-          <img *ngIf="opinion.familiaDTO?.fotoFamilia" 
-               [src]="opinion.familiaDTO?.fotoFamilia" 
-               alt="Foto Familia" 
-               class="rounded-circle mb-2" 
-               style="width:60px; height:60px; object-fit:cover;">
-          
-          <h6 class="card-subtitle mb-2 text-muted">
-            {{ opinion.familiaDTO?.nombreFamilia || 'Familia' }}
-          </h6>
+  <div class="d-flex flex-wrap justify-content-center gap-">
 
-          <p class="card-text">
-            {{ opinion.comentario | slice:0:100 }}
-            {{ opinion.comentario.length > 100 ? '...' : '' }}
-          </p>
+    <div *ngFor="let opinion of opinionesDestacadas | slice:0:4"
+         class="opinion-bubble text-center">
 
-          <!-- Estrellas -->
-          <div class="star-rating">
-            <ng-container *ngFor="let star of [1,2,3,4,5]">
-              <i class="bi" 
-                 [ngClass]="star <= opinion.puntuacion ? 'bi-star-fill text-warning' : 'bi-star text-muted'">
-              </i>
-            </ng-container>
-          </div>
+      <!-- Foto circular -->
+      <img *ngIf="opinion.familiaDTO?.fotoFamilia"
+           [src]="opinion.familiaDTO?.fotoFamilia"
+           class="bubble-photo"
+           alt="Foto familia">
 
-        </div>
+      <!-- Si no tiene foto -->
+      <div *ngIf="!opinion.familiaDTO?.fotoFamilia"
+           class="bubble-photo default-icon">
+        <i class="bi bi-people-fill"></i>
       </div>
-    </div>
 
-    <!-- Controles -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselOpinionesHome" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon"></span>
-      <span class="visually-hidden">Anterior</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselOpinionesHome" data-bs-slide="next">
-      <span class="carousel-control-next-icon"></span>
-      <span class="visually-hidden">Siguiente</span>
-    </button>
+      <!-- Nombre familia -->
+      <p class="mt-2 mb-1 fw-semibold text-dark">
+        {{ opinion.familiaDTO?.nombreFamilia || 'Familia' }}
+      </p>
+
+      <!-- Comentario recortado -->
+      <p class="small text-muted px-2">
+        "{{ opinion.comentario | slice:0:50 }}{{ opinion.comentario.length > 50 ? '…' : '' }}"
+      </p>
+
+      <!-- Estrellas -->
+      <div>
+        <i *ngFor="let s of [1,2,3,4,5]"
+           class="bi"
+           [ngClass]="{
+             'bi-star-fill text-warning': s <= opinion.puntuacion,
+             'bi-star text-secondary': s > opinion.puntuacion
+           }"></i>
+      </div>
+
+    </div>
 
   </div>
 </div>

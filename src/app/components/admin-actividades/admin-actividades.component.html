@@ -57,7 +57,7 @@
     <div *ngFor="let act of actividadesFiltradas" class="col-md-6 col-lg-4">
       <div class="card h-100 shadow-sm border-0">
         <div class="card-body d-flex flex-column">
-          <h5 class="card-title text-primary text-center">{{ act.nombreActividad }}</h5>
+          <h5 class="card-title text-success text-center">{{ act.nombreActividad }}</h5>
           <h6 class="card-subtitle mb-2 text-muted text-center">
   <i [ngClass]="{
     'bi bi-tree': act.tipoActividadDTO.nombreTipoActividad === 'Senderismo',
@@ -73,6 +73,7 @@
 
           <p class="card-text flex-grow-1">
             <strong>Ubicación:</strong> {{ act.ubicacion }}<br>
+            <strong>Descripcion:</strong> {{ act.descripcion }}<br>
             <strong>Duración:</strong> {{ act.duracion }} min<br>
             <strong>Dificultad:</strong> {{ act.dificultad }}<br>
             <strong>Precio:</strong>{{ esNumero(act.precio) ? (act.precio | currency:'EUR':'symbol':'1.2-2') : act.precio }}<br>
@@ -102,13 +103,26 @@
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <form [formGroup]="actividadForm" (ngSubmit)="guardarActividad()">
-        <div class="modal-header bg-primary text-white">
+        <div class="modal-header  text-white">
           <h5 class="modal-title">{{ editando ? 'Editar Actividad' : 'Nueva Actividad' }}</h5>
           <button type="button" class="btn-close btn-close-white" (click)="cerrarModal()"></button>
         </div>
 
         <div class="modal-body">
           <div class="row g-3">
+
+           <!-- ------------------- foto ------------------- -->
+<div class="mb-3">
+  <label class="form-label">Imagen Principal</label>
+  <input type="file" (change)="onFileSelected($event)" accept="image/*" class="form-control mb-2">
+
+  <!-- Previsualización -->
+  <div *ngIf="fotoPreview" class="mt-2 text-center">
+    <img [src]="fotoPreview" alt="Preview" class="img-thumbnail" style="max-height: 150px;">
+  </div>
+</div>
+
+
             <!-- Nombre -->
             <div class="col-md-6">
               <label class="form-label">Nombre *</label>
@@ -199,8 +213,8 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
-          <button type="submit" class="btn btn-primary">{{ editando ? 'Guardar cambios' : 'Crear actividad' }}</button>
+          <button type="button" class="btn btn-danger" (click)="cerrarModal()">Cancelar</button>
+          <button type="submit" class="btn btn-success ">{{ editando ? 'Guardar cambios' : 'Crear actividad' }}</button>
         </div>
       </form>
     </div>

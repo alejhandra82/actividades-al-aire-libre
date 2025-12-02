@@ -1,7 +1,91 @@
-.card {
+/* Tarjetas */
+.evento-card {
+  flex: 0 0 auto;
+  width: 275px;
+  position: relative;
+  background-color: #f8f9f4;
+  border-radius: 12px;
+  padding: 15px;
+  overflow: hidden;
   transition: transform 0.2s ease-in-out;
 }
+.evento-card .card-title {
+  color: #fd7e14; /* naranja natural/acción */
+}
 
-.card:hover {
-  transform: translateY(-5px);
+
+/* Pseudo-elemento logo */
+.evento-card::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  height: 90%;
+  background-image: url('/assets/logoAireLibresinletras2.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transform: translate(-50%, -50%);
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+/* Contenido */
+.evento-card .card-body {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hover */
+.evento-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* Contenedor desplazable */
+#scrollContainer, .d-flex.overflow-hidden {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1.5rem; /* más espacio entre tarjetas */
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 0 1rem;
+  margin-bottom: 2rem; /* espacio debajo del carrusel */
+}
+
+/* Descripción multiline truncada */
+.multiline-truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* máximo 2 líneas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Botones debajo del carrusel */
+.d-flex.justify-content-center.mt-3.gap-3 button {
+  min-width: 50px;
+  border-radius: 50%;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Responsive */
+/* Tablets (≤1024px) */
+@media (max-width: 1024px) {
+  .evento-card { width: 280px; }
+}
+
+/* Móviles (≤768px) */
+@media (max-width: 768px) {
+  #scrollContainer, .d-flex.overflow-hidden { padding: 0 0.5rem; gap: 0.75rem; }
+  .evento-card { width: 220px; }
+}
+
+.actividad-badge {
+  white-space: normal;       /* permite varias líneas */
+  word-break: break-word;    /* corta palabras largas */
+  display: inline-block;
+  max-width: 100%;           /* no se sale de la tarjeta */
+  font-size: 0.85rem;        /* ligeramente más pequeño */
 }

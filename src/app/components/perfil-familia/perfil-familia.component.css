@@ -13,5 +13,23 @@
   text-transform: uppercase;
 }
 
+.btn-salmon {
+  background-color: #FFA07A;
+  border-color: #FFA07A;
+  color: white;
+}
+
+.btn-salmon:hover {
+  background-color: #ff8a63;
+  border-color: #ff8a63;
+}
+
+/* Cambiar borde y sombra cuando el input está enfocado */
+.form-control:focus {
+  border-color: #FFA07A; /* color del borde al hacer focus */
+  box-shadow: 0 0 0 0.25rem rgba(255, 160, 122, 0.25); /* sombra opcional */
+  outline: none; /* quita el borde azul por defecto de algunos navegadores */
+}
+
 
 

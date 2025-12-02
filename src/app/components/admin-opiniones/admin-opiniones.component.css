@@ -32,35 +32,30 @@ h4.fw-bold {
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
 }
-
-h4.fw-bold::before {
-  content: "💬 "; /* icono de chat antes del título */
-}
-
 /* ======= Botones de modo ======= */
 .btn-group {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.75rem;
   margin-bottom: 1.5rem;
-  justify-content: center;
-  flex-wrap: wrap;
+  justify-content: center;  
 }
 
 .btn-group .btn {
-  min-width: 80px;
-  max-width: 180px;
+  min-width: 140px;
   font-weight: 600;
-  padding: 0.6rem 1.2rem;
-  border: 2px solid #ff9800; /* borde naranja */
-  background: transparent;
-  color: #ff9800;
   border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  border: 2px solid #ff9800; 
+  background: transparent;
+  color: #ff9800; 
   cursor: pointer;
   transition: all 0.2s ease;
+  flex: 0 0 auto;
 }
 
 .btn-group .btn.activo {
-  background: #ff9800; /* fondo naranja */
+  background: #ff9800;
   color: #fff;
 }
 
@@ -147,28 +142,94 @@ select.form-select:hover {
   margin-top: 2rem;
 }
 
-/* ======= Responsive ======= */
+.stars i {
+  color:  #FFD700; /* el naranja que usas */
+  font-size: 1.2rem;
+  margin-right: 2px;
+}
+
+/* Responsive*/
+/* ======= Tablets (≤ 1024px) ======= */
+@media (max-width: 1024px) {
+
+  .container {
+    padding: 1.5rem;
+  }
+
+  /* Corrige overflow horizontal del header */
+  .header-fijo {
+    min-width: 100%;
+    padding: 1.5rem 1rem;
+  }
+
+  .btn-group {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* Ajuste del filtro */
+  .filtro-container {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  select.form-select {
+    width: 100%;
+  }
+
+  /* Tarjetas: 2 por fila en tablet */
+  .col-md-4, .col-sm-6 {
+    flex: 1 1 45%;
+    max-width: 45%;
+  }
+}
+
+/* ======= Móviles (≤ 768px) ======= */
 @media (max-width: 768px) {
+
+  .container {
+    padding: 1rem;
+    min-height: auto;
+  }
+
+  .header-fijo {
+    min-width: 100%;
+    padding: 1rem;
+  }
+
+  h4.fw-bold {
+    font-size: 1.4rem;
+  }
+
+  /* Botones uno bajo otro */
   .btn-group {
     flex-direction: column;
-    align-items: center;
+    width: 100%;
+    gap: 0.5rem;
   }
 
   .btn-group .btn {
     width: 100%;
   }
 
-  select.form-select {
-    width: 100%;
-  }
-  
-  .col-md-4, .col-sm-6 {
-    flex: 0 1 100%;
-    max-width: 100%;
-  }
-
+  /* Filtros columna */
   .filtro-container {
     flex-direction: column;
     gap: 0.5rem;
+    width: 100%;
+  }
+
+  select.form-select {
+    width: 100%;
+  }
+
+  /* Tarjetas: una por fila */
+  .col-md-4, .col-sm-6 {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .card {
+    padding: 1rem;
   }
 }

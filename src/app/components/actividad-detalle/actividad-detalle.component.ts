@@ -28,32 +28,36 @@ export class ActividadDetalleComponent implements OnInit {
     private actividadService: ActividadService
   ) {}
 
-  ngOnInit(): void {
-    // Forma sencilla de obtener el ID de la URL
-    const id = +this.route.snapshot.params['id']; // + convierte a número
+ ngOnInit(): void {
+  const id = +this.route.snapshot.params['id']; // + convierte a número
 
-    if (id) {
-      // Llamamos al servicio para obtener la actividad
-      this.actividadService.getActividadById(id).subscribe(
-        data => this.actividad = data,
-        err => console.error('Error al obtener actividad:', err)
-      );
-    }
+  if (id) {
+    this.actividadService.getActividadById(id).subscribe({
+      next: (data) => {
+        this.actividad = data;
 
-    // Obtener la familia logueada desde SessionService
+        // 🔹 Pedir URL SAS de la imagen de la actividad
+        this.actividadService.obtenerFotoActividad(id).subscribe({
+          next: (sasUrl) => {
+            console.log("SAS DETALLE:", sasUrl);
+            this.imagenPrincipalSeleccionada = sasUrl;
+          },
+          error: () => {
+            this.imagenPrincipalSeleccionada = "assets/actividades/default.jpg";
+          }
+        });
+      },
+      error: (err) => {
+        console.error("Error al obtener actividad:", err);
+      }
+    });
+  }
+
+  // Obtener familia logueada
   this.familiaLogueada = this.sessionService.obtenerFamilia();
-  }
-
-  imagenesSecundariasArray(): string[] {
-  if (!this.actividad?.imagenesSecundarias) return [];
-  try {
-    return JSON.parse(this.actividad.imagenesSecundarias);
-  } catch (e) {
-    console.error('Error parseando imágenes secundarias:', e);
-    return [];
-  }
-  
 }
+
+
 cambiarImagenPrincipal(url: string) {
   this.imagenPrincipalSeleccionada = url;
 }

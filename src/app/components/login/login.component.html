@@ -1,37 +1,67 @@
-<div class="container col-6 mt-4">
-  <div class="card p-4 shadow-lg rounded-3">
-    <h2 class="text-center mb-3">Iniciar Sesión</h2>
-    <form (ngSubmit)="login()">
-      <div class="mb-3">
-        <label for="correo" class="form-label">Correo</label>
-        <input
-          type="email"
-          id="correo"
-          class="form-control"
-          [(ngModel)]="correo"
-          name="correo"
-          required
-        />
-      </div>
+<div class="container-fluid vh-100 d-flex p-0">
 
-      <div class="mb-3">
-        <label for="contrasena" class="form-label">Contraseña</label>
-        <input
-          type="password"
-          id="contrasena"
-          class="form-control"
-          [(ngModel)]="contrasena"
-          name="contrasena"
-          required
-        />
+  <!-- Imagen izquierda (solo md+) -->
+  <div class="d-none d-md-block col-md-6 login-left"></div>
+
+  <!-- Imagen derecha (solo md+) -->
+  <div class="d-none d-md-block col-md-6 login-right"></div> 
+
+  <!-- Formlario centrado-->
+  <div class="position-absolute top-50 start-50
+           translate-middle col-12 col-md-4">
+    <div class="card shadow-sm rounded-4 p-4 p-md-5">
+      <h2 class="text-center mb-4 text-dark-emphasis bold">
+        Hola de nuevo. <br>
+        Inicia sesión y empieza a explorar.
+      </h2>
+
+      <form (ngSubmit)="login()">
+
+        <!-- Correo -->
+        <div class="mb-3">
+          <input
+            type="email"
+            class="form-control rounded-2"
+            [(ngModel)]="correo"
+            name="correo"
+            placeholder="Dirección de correo electrónico*"
+            required/>
+          <p *ngIf="errorCorreo" class="text-danger small mt-1">{{ errorCorreo }}</p>
+        </div>
+ 
+        <!-- Contraseña -->
+        <div class="mb-3 position-relative">
+          <input
+            [type]="verContrasena ? 'text' : 'password'"
+            class="form-control rounded-2"
+            [(ngModel)]="contrasena"
+            name="contrasena"
+            placeholder="Contraseña*"
+            required/>
+          <p *ngIf="errorContrasena" class="text-danger small mt-1">{{ errorContrasena }}</p>
+         <i class="bi"
+    [ngClass]="verContrasena ? 'bi-eye-slash' : 'bi-eye'"
+    (click)="verContrasena = !verContrasena"
+    class="toggle-password"></i>
+        </div>
+
+        <!-- Errores generales -->
+      <p *ngIf="error" class="text-danger small mt-2">{{ error }}</p>
+
+        <!-- Botón -->
+        <div class="text-center mt-4">
+          <button type="submit" class="btn btn-login btn-lg px-5 rounded-pill">
+            Iniciar sesión
+          </button>
+        </div>
+        </form>
+
+      <!-- Registro -->
+      <div class="text-center mt-3">
+        <span>¿No tienes cuenta? </span>
+        <a class="register-link" routerLink="/registro">Registrate</a>
       </div>
-<div class="d-grid d-md-flex justify-content-md-center">
-<button type="submit" class="btn btn-primary btn-lg">Enviar</button>
+    </div>
+  </div>
+ 
 </div>
-</form>
-    <div *ngIf="error" class="alert alert-danger mt-3">
-    {{ error }}
-  </div>
-  </div>
-
-

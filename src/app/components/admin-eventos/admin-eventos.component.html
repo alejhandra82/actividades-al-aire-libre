@@ -1,64 +1,92 @@
-<div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h4 class="fw-bold text-primary">Gestión de Eventos</h4>
-    <button class="btn btn-success btn-sm" (click)="abrirModalCrear()">
+<div class="container">
+
+  <!-- HEADER FIJO -->
+  <div class="header-fijo">
+    <h4 class="titulo-admin">
+      <i class="bi bi-calendar-event"></i> Gestión de Eventos
+    </h4>
+
+    <!-- Botones de modo -->
+    <div class="modo-container">
+      <button class="modo-btn" [class.activo]="modoVista === 'todas'" (click)="cambiarModo('todas')">
+        Todos
+      </button>
+      <button class="modo-btn" [class.activo]="modoVista === 'actividad'" (click)="cambiarModo('actividad')">
+        Por actividad
+      </button>
+      <button class="modo-btn" [class.activo]="modoVista === 'nombre'" (click)="cambiarModo('nombre')">
+        Por nombre
+      </button>
+    </div>
+
+    <!-- Filtros -->
+    <div class="filtro-fijo">
+      <!-- Filtro por actividad -->
+      <select *ngIf="modoVista === 'actividad'" class="dropdown" (change)="onActividadSeleccionada($any($event.target).value)">
+        <option value="">Seleccione una actividad</option>
+        <option *ngFor="let a of actividades" [value]="a.idActividad">
+          {{ a.nombreActividad }}
+        </option>
+      </select>
+
+      <!-- Filtro por nombre -->
+      <input *ngIf="modoVista === 'nombre'" 
+             type="text"
+             class="filtro-input"
+             placeholder="🔍 Buscar por nombre..."
+             (input)="onNombreIngresado($any($event.target).value)">
+    </div>
+  
+
+  <!-- BOTÓN CREAR -->
+  <div class="text-end mb-3">
+    <button class="btn btn-success btn-sm btn-bold" (click)="abrirModalCrear()">
       <i class="bi bi-plus-circle"></i> Nuevo Evento
     </button>
   </div>
-
-  <!-- Cargando -->
+</div>
+  <!-- SPINNER -->
   <div *ngIf="cargando" class="text-center my-5">
     <div class="spinner-border text-primary" role="status"></div>
     <p class="mt-3">Cargando eventos...</p>
   </div>
 
-  <!-- Tabla de eventos -->
-  <div *ngIf="!cargando && eventos.length > 0" class="table-responsive tabla-centrada">
-    <table class="table table-hover align-middle shadow-sm">
-      <thead class="table-light">
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Actividad</th>
-          <th>Fecha</th>
-          <th>Descripción</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let evento of eventos">
-          <td>{{ evento.idEvento }}</td>
-          <td>{{ evento.nombreEvento }}</td>
-          <td>{{ evento.actividadDTO.nombreActividad || 'Sin actividad' }}</td>
-          <td>{{ evento.fechaEvento | date:'short' }}</td>
-          <td>{{ evento.descripcionEvento }}</td>
-          <td>
-  <div class="d-flex justify-content-center gap-2">
-    <button class="btn btn-outline-primary btn-sm" (click)="abrirModalEditar(evento)">
-      <i class="bi bi-pencil"></i>
-    </button>
-    <button class="btn btn-outline-danger btn-sm" (click)="eliminarEvento(evento.idEvento)">
-      <i class="bi bi-trash"></i>
-    </button>
-  </div>
-</td>
-        </tr>
-      </tbody>
-    </table>
+  <!-- LISTA DE EVENTOS -->
+  <div *ngIf="!cargando && eventosFiltrados.length > 0" class="row g-3">
+    <div *ngFor="let ev of eventosFiltrados" class="col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title text-dark-emphasis text-center">{{ ev.nombreEvento }}</h5>
+            <p class="card-text flex-grow-1 ">
+            <strong>Actividad:</strong> {{ ev.actividadDTO.nombreActividad }}<br>
+            <strong>Descripción:</strong> {{ ev.descripcionEvento }}<br>
+            <strong>Fecha:</strong> {{ ev.fechaEvento | date:'mediumDate' }}<br>            
+          </p>
+
+          <div class="mt-3 d-flex justify-content-around">
+            <button class="btn btn-outline-primary btn-sm" (click)="abrirModalEditar(ev)">
+              <i class="bi bi-pencil"></i> Editar
+            </button>
+            <button class="btn btn-outline-danger btn-sm" (click)="eliminarEvento(ev.idEvento)">
+              <i class="bi bi-trash"></i> Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- Sin eventos -->
-  <div *ngIf="!cargando && eventos.length === 0" class="text-center text-muted">
-    No hay eventos registrados.
+  <!-- SIN RESULTADOS -->
+  <div *ngIf="!cargando && eventosFiltrados.length === 0" class="text-center text-muted mt-5">
+    No hay eventos que coincidan con los filtros seleccionados.
   </div>
-</div>
-
+  
 <!-- Modal -->
 <div class="modal fade" id="eventoModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content">
       <form [formGroup]="eventoForm" (ngSubmit)="guardarEvento()">
-        <div class="modal-header bg-primary text-white">
+        <div class="modal-header bg-dark-subtle text-white">
           <h5 class="modal-title">{{ editando ? 'Editar Evento' : 'Nuevo Evento' }}</h5>
           <button type="button" class="btn-close btn-close-white" (click)="cerrarModal()"></button>
         </div>
@@ -128,8 +156,8 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Cancelar</button>
-          <button type="submit" class="btn btn-primary">{{ editando ? 'Guardar cambios' : 'Crear evento' }}</button>
+          <button type="button" class="btn btn-danger" (click)="cerrarModal()">Cancelar</button>
+          <button type="submit" class="btn btn-success">{{ editando ? 'Guardar cambios' : 'Crear evento' }}</button>
         </div>
       </form>
     </div>

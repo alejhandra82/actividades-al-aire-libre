@@ -1,45 +1,344 @@
+/* ================== Contenedor principal ================== */
 .container {
   max-width: 1200px;
-  padding: 0 5rem;
+  width: 100%;
+  min-height: 600px;
+  margin: 0 auto;
+  padding: 2rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
+/* ================== Tabla ================== */
 .table {
   background-color: #fff;
   border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.table th {
+  font-weight: 600;
+  background-color: #f8f9fa;
 }
 
 .table-hover tbody tr:hover {
-  background-color: #f1f5f9;
+  background-color: #edf1ff;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+/* ================== Cards ================== */
+.card {
+  border-radius: 0.75rem;
+  border: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+.card-body {
+  display: flex;
+  flex-direction: column;
+  
+}
+.card-title {
+  font-weight: 600;
+  color: #3a57e8;
+  align-items:center;
+}
+
+.card-subtitle {
+  font-size: 1.2rem;
+  color: #6c757d;
+}
+
+/* ================== Botones ================== */
+.btn-success {
+  background-color: #8693ab;
+  border-color: #8693ab;
+  
+}
+
+.btn-success:hover {
+  background-color: #d9d9d9;
+  border-color: #d9d9d9;
+}
+
+.btn-outline-primary {
+  color: #3a57e8;
+  border-color: #3a57e8;
+}
+
+.btn-outline-primary:hover {
+  background-color: #3a57e8;
+  color: #fff;
+}
+
+.btn-outline-danger {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* ================== Modal ================== */
+.modal-header {
+  border-bottom: 1px solid #dee2e6;
+  background-color: #8693ab;
+  color: #ffff;
+}
+
+.modal-footer {
+  border-top: 1px solid #dee2e6;
 }
 
 .modal-content {
   border-radius: 0.5rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
 
+/* ================== Form Inputs ================== */
 input.ng-invalid.ng-touched,
 select.ng-invalid.ng-touched,
 textarea.ng-invalid.ng-touched {
   border-color: #dc3545;
 }
 
+input.form-control,
+select.form-select,
+textarea.form-control {
+  border-radius: 0.375rem;
+}
+
+/* ================== Spinner ================== */
 .spinner-border {
   width: 3rem;
   height: 3rem;
+  color: #3a57e8;
 }
 
+/* ================== Responsividad ================== */
 @media (max-width: 768px) {
   .table-responsive {
     font-size: 0.9rem;
   }
+
+  .row.g-3 > .col-md-6,
+  .row.g-3 > .col-lg-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+/* ================== Header con filtros ================== */
+.header-fijo {  
+  width: 100%;
+  min-width: 1100px;
+  text-align: center;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 2rem 1rem;
+  margin-bottom: 2rem; 
+  top: 1rem; 
+  z-index: 10;
 }
 
-.tabla-centrada {
+/* Título */
+.titulo-admin {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #8693ab;
+  margin-bottom: 1.5rem;
+ 
+}
+
+/* Botones de modo */
+.modo-container {
   display: flex;
   justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
 }
 
-.tabla-centrada .table {
-  width: auto;
+.modo-btn {
+  min-width: 140px;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  border: 2px solid #8693ab;
+  background: #f0f0f0;
+  font-weight: 600;
+  color: #333;
+  transition: all 0.2s ease;
+  cursor: pointer;  
 }
 
+.modo-btn:hover {
+  background-color: #d9d9d9;
+}
+
+.modo-btn.activo {
+  background-color: #8693ab;
+  color: white;
+  box-shadow: 0 2px 6px rgba(58, 87, 232, 0.3);
+}
+
+/* Filtros (select o input) */
+.filtro-fijo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.dropdown,
+.input-filtro {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+.dropdown:focus,
+.input-filtro:focus {
+  border-color: #8693ab;
+  outline: none;
+}
+
+/* ================== RESPONSIVIDAD GLOBAL ================== */
+
+/* Tablets (pantallas medianas) */
+@media (max-width: 992px) {
+  .container {
+    padding: 1.5rem;
+  }
+
+  .header-fijo {
+    min-width: auto;
+    padding: 1.5rem;
+  }
+
+  .titulo-admin {
+    font-size: 1.5rem;
+  }
+
+  .modo-container {
+    gap: 0.5rem;
+  }
+
+  .modo-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .card {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Móviles (pantallas pequeñas) */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+    align-items: stretch;
+  }
+
+  .header-fijo {
+    min-width: auto;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .titulo-admin {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .modo-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .modo-btn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .filtro-fijo {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .dropdown,
+  .filtro-input {
+    width: 100%;
+  }
+
+  .row.g-3 > .col-md-6,
+  .row.g-3 > .col-lg-4 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .card {
+    font-size: 0.95rem;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .card-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .btn i {
+    margin-right: 4px;
+  }
+}
+
+/* Pantallas muy pequeñas (teléfonos compactos) */
+@media (max-width: 480px) {
+  .titulo-admin {
+    font-size: 1.1rem;
+  }
+
+  .modo-btn {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+  }
+}

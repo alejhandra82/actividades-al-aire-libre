@@ -9,8 +9,7 @@ import { Actividad } from '../models/actividad';
 export class ActividadService {
 
   private apiUrl = 'http://localhost:8888/api/actividades'; 
-  // Cambia el puerto si tu backend usa otro
-
+ 
   constructor(private http: HttpClient) { }
 
   // Obtener todas las actividades
@@ -22,19 +21,37 @@ export class ActividadService {
   getActividadById(id: number): Observable<Actividad> {
     return this.http.get<Actividad>(`${this.apiUrl}/${id}`);
   }
-
-  // Crear una nueva actividad
+   
+  // Crear una nueva actividad. Esta funcionaba sin imagen
   crearActividad(actividad: Actividad): Observable<Actividad> {
-    return this.http.post<Actividad>(this.apiUrl, actividad);
-  }
+    return this.http.post<Actividad>(this.apiUrl, actividad); }
 
   // Actualizar una actividad existente
-  actualizarActividad(id: number, actividad: Actividad): Observable<Actividad> {
-    return this.http.put<Actividad>(`${this.apiUrl}/${id}`, actividad);
-  }
+    actualizarActividad(id: number, actividad: Actividad): Observable<Actividad> {
+    return this.http.put<Actividad>(`${this.apiUrl}/${id}`, actividad); }
 
   // Eliminar una actividad
   eliminarActividad(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+subirFotoActividad(id: number, file: File): Observable<string> {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  return this.http.post(`${this.apiUrl}/${id}/foto`, formData, { responseType: 'text' } );
 }
+
+obtenerFotoActividad(idActividad: number): Observable<string> {
+  return this.http.get(`${this.apiUrl}/${idActividad}/foto`, { responseType: 'text' });
+}
+
+//Foto Default
+obtenerFotoDefault(): Observable<string> {
+  return this.http.get(`${this.apiUrl}/foto/default`, { responseType: 'text' });
+}
+}
+
+
+
+

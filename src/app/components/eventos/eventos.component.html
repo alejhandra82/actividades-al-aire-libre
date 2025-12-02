@@ -1,32 +1,37 @@
-<div *ngIf="estilo === 'catalogo'" class="row">
-  <div *ngFor="let evento of eventos" class="col-md-6 col-lg-4 mb-4">
-    <div class="card shadow-sm h-100">
-      <div class="card-body d-flex flex-column">
-        <h5 class="card-title text-uppercase text-center">{{ evento.nombreEvento }}</h5>
-        <p class="card-text">{{ evento.descripcionEvento }}</p>
-        <p class="card-text"><strong>Fecha:</strong> {{ evento.fechaEvento | date:'short' }}</p>
-        <div class="mt-auto">
-          <app-participacion [eventoId]="evento.idEvento"></app-participacion>
-        </div>
+<div *ngIf="estilo === 'catalogo'" class="py-3 mb-4">
+  <!-- Contenedor desplazable -->
+  <div #scrollContainer class="d-flex overflow-hidden">
+    <div *ngFor="let evento of eventos"
+         class="card text-center shadow-sm mx-2 flex-shrink-0 evento-card"
+         [routerLink]="['/actividad', evento.actividadDTO.idActividad]">
+
+      <div class="card-body d-flex flex-column justify-content-between">
+        <h6 class="card-title text-uppercase fw-bold mb-2">{{ evento.nombreEvento }}</h6>
+
+        <!-- Descripción recortada y multiline -->
+        <p class="card-text small multiline-truncate">
+          {{ evento.descripcionEvento | slice:0:50 }}{{ evento.descripcionEvento.length > 50 ? '…' : '' }}
+        </p>
+
+        <p class="card-text text-muted mb-2">
+          <i class="bi bi-calendar-event me-1"></i>{{ evento.fechaEvento | date:'shortDate' }}
+        </p>
+        <!-- Badge del nombre de la actividad -->
+        <span class="badge bg-secondary mb-2 actividad-badge" 
+            [attr.title]="evento.actividadDTO.nombreActividad">
+           {{ evento.actividadDTO.nombreActividad }}
+        </span>
       </div>
     </div>
+  </div>
+
+  <!-- Botones debajo del carrusel -->
+  <div class="d-flex justify-content-center mt-3 gap-3">
+    <button class="btn btn-outline-warning" (click)="moverIzquierda()">&#10094;</button>
+    <button class="btn btn-outline-warning" (click)="moverDerecha()">&#10095;</button>
   </div>
 </div>
 
-<div *ngIf="estilo === 'lista'" class="d-flex flex-column gap-3">
-  <div *ngFor="let evento of eventos">
-    <div class="card shadow-sm h-100">
-      <div class="card-body d-flex flex-column">
-        <h5 class="card-title">{{ evento.nombreEvento }}</h5>
-        <p class="card-text">{{ evento.descripcionEvento }}</p>
-        <p class="card-text"><strong>Fecha:</strong> {{ evento.fechaEvento | date:'short' }}</p>
-        <div class="mt-auto">
-          <app-participacion [eventoId]="evento.idEvento"></app-participacion>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 

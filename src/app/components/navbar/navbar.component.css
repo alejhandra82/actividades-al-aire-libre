@@ -1,4 +1,57 @@
+.fw-bold.fs-4 {
+  font-family: 'Montserrat', 'Segoe UI', Roboto, sans-serif;
+}
+
 .nav-link.active {
   font-weight: bold;
-  color: #31973d !important; 
+  color: #f5f7f5 !important; 
+}
+
+.navbar .nav-link {
+ transition: all 0.2s ease-in-out;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+}
+
+.navbar .nav-link:hover {
+  transform: scale(1.1);          /* agranda el botón un 10% */
+  color: #fff !important;  
+}
+
+/* --- Efecto hover suave en los botones del navbar --- */
+.navbar .nav-link {
+  transition: all 0.2s ease-in-out;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+}
+
+.navbar .nav-link:hover {
+  transform: scale(1.1);          /* agranda el botón un 10% */
+  color: #fff !important;         /* resalta el texto */
+}
+/* Para el título */
+h4.fw-bold {
+  font-family: 'Montserrat', 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Botón de inicio de sesión transparente */
+.btn-login-navbar {
+  background-color: transparent; 
+  color: #fff;                   
+  border: 2px solid #fff;        
+  border-radius: 50px;           
+  padding: 0.2rem 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  text-decoration: none;     
+  max-width: 190px;        /* ancho máximo para que no se estire */
+      
+}
+
+.btn-login-navbar:hover {
+  background-color: #fff;        
+  color: #000;                   
+  transform: scale(1.05);
+  border-color: #fff;            
 }
