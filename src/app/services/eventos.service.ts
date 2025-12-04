@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Evento } from '../models/evento';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventoService {
-  private apiUrl = 'http://localhost:8888/api/eventos';
+  private apiUrl = `${environment.apiUrl}/eventos`;
  
   constructor(private http: HttpClient) {}
 

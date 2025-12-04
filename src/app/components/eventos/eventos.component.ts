@@ -7,12 +7,11 @@ import { ParticipacionService } from '../../services/participacion.service';
 import { Evento } from '../../models/evento';
 import { SessionService } from '../../services/session.service';
 import { AlertService } from '../../services/alerts.service';
-import { ParticipacionComponent } from '../participacion/participacion.component';
 
 @Component({
   selector: 'app-eventos',
   standalone: true,
-  imports: [CommonModule, RouterModule, ParticipacionComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './eventos.component.html',
   styleUrls: ['./eventos.component.css']
 })

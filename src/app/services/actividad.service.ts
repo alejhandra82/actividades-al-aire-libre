@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Actividad } from '../models/actividad';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root' // Esto hace que el servicio esté disponible en toda la app
 })
 export class ActividadService {
 
-  private apiUrl = 'http://localhost:8888/api/actividades'; 
- 
+  private apiUrl = `${environment.apiUrl}/actividades`; 
+
   constructor(private http: HttpClient) { }
 
   // Obtener todas las actividades

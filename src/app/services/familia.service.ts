@@ -3,14 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Familia } from '../models/familia';
 import { Usuario } from '../models/usuario';
+import { environment } from '../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class FamiliaService {
 
-  private apiUrl = 'http://localhost:8888/api'; 
-
+  private apiUrl = `${environment.apiUrl}`; 
 
   constructor(private http: HttpClient) {}
 

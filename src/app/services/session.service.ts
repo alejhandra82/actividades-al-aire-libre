@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-/**
- * Servicio que gestiona la sesión del usuario (login/logout).
- * Usa BehaviorSubject para permitir que otros componentes
- * se suscriban y reaccionen a los cambios en el estado de la sesión.
- */
 @Injectable({
   providedIn: 'root',
 })

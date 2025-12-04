@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Participacion } from '../models/participacion';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ParticipacionService {
-  private apiUrl = 'http://localhost:8888/api/participaciones';
+  private apiUrl = `${environment.apiUrl}/participaciones`; 
+
 
   constructor(private http: HttpClient) {}
 
@@ -46,5 +48,4 @@ export class ParticipacionService {
     return this.http.get<Participacion[]>(`${this.apiUrl}/eventos/${idEvento}`);
   }
   
-  
-}
+  }
